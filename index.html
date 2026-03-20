@@ -503,6 +503,83 @@
       margin-bottom: 0;
     }
 
+    /* ─── PREMIUM SPLIT SECTIONS (MT MOGRAPH STYLE) ─── */
+    .premium-splits {
+      display: flex;
+      flex-direction: column;
+      gap: 120px;
+      margin-bottom: 120px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .feature-split {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 60px;
+    }
+    @media (min-width: 900px) {
+      .feature-split {
+        flex-direction: row;
+        gap: 80px;
+      }
+      .feature-split:nth-child(even) {
+        flex-direction: row-reverse;
+      }
+    }
+    .split-text {
+      flex: 1;
+      min-width: 300px;
+    }
+    .split-eyebrow {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 16px;
+      display: inline-block;
+    }
+    .split-title {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      color: #fff;
+    }
+    .split-desc {
+      font-size: 17px;
+      color: #94A3B8;
+      line-height: 1.7;
+    }
+    .split-visual {
+      flex: 1.2;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+    }
+    .split-visual::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);
+      pointer-events: none;
+    }
+    .split-visual img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .split-visual:hover img {
+      transform: scale(1.03);
+    }
+
     /* ─── MOPACK ─── */
     .mopack-section {
       padding: 80px 24px 120px;
@@ -862,92 +939,102 @@
     <h2 class="section-title">Everything Your Team Needs</h2>
     <p class="section-sub">Built specifically for motion designers and video editors who live in After Effects.</p>
 
+    <!-- Flagship Features Layout -->
+    <div class="premium-splits">
+      <!-- Split 1: MoPack -->
+      <div class="feature-split fade-up">
+        <div class="split-text">
+          <span class="split-eyebrow">Cloud Review</span>
+          <h2 class="split-title">Feedback,<br/>Timestamped.</h2>
+          <p class="split-desc">Upload your timeline renders directly to MoPack with a single click. Share the generated web link, and your clients can view the video, drop precise timestamped notes, and draw shapes directly on the frame—all instantly synced back to your After Effects panel.</p>
+        </div>
+        <div class="split-visual">
+          <img src="/screenshots/Mopack.png" alt="MoPack Cloud Review" />
+        </div>
+      </div>
+
+      <!-- Split 2: MoPrompt -->
+      <div class="feature-split fade-up">
+        <div class="split-text">
+          <span class="split-eyebrow">AI Automation</span>
+          <h2 class="split-title">Code Without Coding.</h2>
+          <p class="split-desc">Don't know ExtendScript or expressions? Just type what you want to achieve in plain English. MoPrompt's advanced AI instantly writes and applies complex scripts directly to your layers, unlocking endless scripting possibilities without the learning curve.</p>
+        </div>
+        <div class="split-visual">
+          <img src="/screenshots/MoPrompt.png" alt="MoPrompt AI Builder" />
+        </div>
+      </div>
+
+      <!-- Split 3: MoHealth -->
+      <div class="feature-split fade-up">
+        <div class="split-text">
+          <span class="split-eyebrow">System Optimization</span>
+          <h2 class="split-title">Keep Your Project Breathing.</h2>
+          <p class="split-desc">Keep massive projects moving at lightspeed. MoHealth automatically scans your composition for hidden memory hogs, unfindable duplicate footage, and lets you purge your RAM and disk caches securely with one click.</p>
+        </div>
+        <div class="split-visual">
+          <img src="/screenshots/Mohealth.png" alt="MoHealth System Optimization" />
+        </div>
+      </div>
+
+      <!-- Split 4: E2EE Chat -->
+      <div class="feature-split fade-up">
+        <div class="split-text">
+          <span class="split-eyebrow">Strict Privacy</span>
+          <h2 class="split-title">True Zero-Knowledge Security.</h2>
+          <p class="split-desc">Every piece of feedback, every shared asset, and every keystroke inside MoaChat is protected by military-grade End-To-End Encryption. Only your team can decrypt your messages. Nobody else—not even us.</p>
+        </div>
+        <div class="split-visual">
+          <img src="/screenshots/End_to_end_encryption.png" alt="End-To-End Encrypted Team Chat" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Secondary Utilities Grid -->
+    <div class="section-eyebrow" style="margin-top: 60px;">More Tools Included</div>
+    <h2 class="section-title" style="margin-bottom: 40px;">The Ultimate Utility Belt</h2>
     <div class="features-grid">
-      <!-- 1. Real-Time Chat & Security -->
-      <div class="feature-img-card fade-up">
-        <div class="feature-img-wrapper">
-          <img src="/screenshots/End_to_end_encryption.png" alt="End-To-End Encrypted Chat" />
-        </div>
-        <div class="feature-img-content">
-          <h3>Encrypted Team Chat</h3>
-          <p>Send messages, share DMs, and collaborate securely. E2EE ensures your sensitive client files and projects remain completely private.</p>
-        </div>
-      </div>
-
-      <!-- 2. MoPack Video Review -->
-      <div class="feature-img-card fade-up">
-        <div class="feature-img-wrapper">
-          <img src="/screenshots/Mopack.png" alt="MoPack Video Review" />
-        </div>
-        <div class="feature-img-content">
-          <h3>MoPack Cloud Review</h3>
-          <p>Instantly upload renders and share a web link. Clients can drop timestamped feedback and shape annotations right in their browser.</p>
-        </div>
-      </div>
-
-      <!-- 3. MoHealth Project Optimizer -->
-      <div class="feature-img-card fade-up">
-        <div class="feature-img-wrapper">
-          <img src="/screenshots/Mohealth.png" alt="MoHealth Project Optimizer" />
-        </div>
-        <div class="feature-img-content">
-          <h3>MoHealth Optimization</h3>
-          <p>Scan your project for memory-hogging assets, duplicate footage, and instantly clear After Effects caches to speed up your workflow.</p>
-        </div>
-      </div>
-
-      <!-- 4. MoPrompt AI Builder -->
-      <div class="feature-img-card fade-up">
-        <div class="feature-img-wrapper">
-          <img src="/screenshots/MoPrompt.png" alt="MoPrompt AI" />
-        </div>
-        <div class="feature-img-content">
-          <h3>MoPrompt AI Expressions</h3>
-          <p>Don't know code? Just type what you want to achieve, and MoPrompt's advanced AI will instantly generate and apply the ExtendScript or expression.</p>
-        </div>
-      </div>
-
-      <!-- 5. MoTouch Workflow Pie Menu -->
+      <!-- Grid 1 -->
       <div class="feature-img-card fade-up">
         <div class="feature-img-wrapper">
           <img src="/screenshots/Motouch.png" alt="MoTouch Pie Menu" />
         </div>
         <div class="feature-img-content">
           <h3>MoTouch Pie Menus</h3>
-          <p>Speed up repetitive actions. Trigger specialized scripts, macros, and alignments using high-speed, intuitive radial menus.</p>
+          <p>Supercharge your workflow. Trigger specialized scripts, alignments, and tools using ultra-fast radial menus.</p>
         </div>
       </div>
 
-      <!-- 6. Free Asset Library -->
+      <!-- Grid 2 -->
       <div class="feature-img-card fade-up">
         <div class="feature-img-wrapper">
-          <img src="/screenshots/Pixabay.png" alt="Stock Assets Integration" />
+          <img src="/screenshots/Pixabay.png" alt="Stock Assets" />
         </div>
         <div class="feature-img-content">
           <h3>Integrated Free Assets</h3>
-          <p>Search Pixabay images, Google Fonts, and SVG icons directly within the panel and apply them straight to your timeline.</p>
+          <p>Search thousands of Pixabay photos, Google Fonts, and SVG icons right within the panel and apply them instantly.</p>
         </div>
       </div>
 
-      <!-- 7. TemGrid Guides -->
+      <!-- Grid 3 -->
       <div class="feature-img-card fade-up">
         <div class="feature-img-wrapper">
           <img src="/screenshots/TemGrid_Rule_of_Thirds.png" alt="TemGrid UI" />
         </div>
         <div class="feature-img-content">
           <h3>TemGrid Layouts</h3>
-          <p>Toggle Rule of Thirds, Golden Ratio, Isometric, and Safe Area overlays onto your composition instantly for perfect alignments.</p>
+          <p>Toggle Golden Ratio, Isometric, Rule of Thirds, and precise grid overlays directly onto your viewer.</p>
         </div>
       </div>
 
-      <!-- 8. MoZoom Timeline Nav -->
+      <!-- Grid 4 -->
       <div class="feature-img-card fade-up">
         <div class="feature-img-wrapper">
           <img src="/screenshots/Mozoom.png" alt="MoZoom Nav" />
         </div>
         <div class="feature-img-content">
           <h3>MoZoom Navigation</h3>
-          <p>No more struggling with dense keyframes. Glide through your timeline and navigate layers with absolute precision and ease.</p>
+          <p>Never lose your place. Glide through dense timelines and navigate countless layers with precise keyframe focus.</p>
         </div>
       </div>
     </div>
