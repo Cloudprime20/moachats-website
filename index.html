@@ -451,36 +451,56 @@
       max-width: 1080px;
       margin: 0 auto;
     }
-    .feature-card {
+    .feature-img-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 28px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
       transition: border-color 0.3s, transform 0.3s;
     }
-    .feature-card:hover {
+    .feature-img-card:hover {
       border-color: rgba(29,161,255,0.3);
       transform: translateY(-4px);
     }
-    .feature-icon {
-      width: 48px; height: 48px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 18px;
-      font-size: 22px;
+    .feature-img-wrapper {
+      width: 100%;
+      height: 180px;
+      background: #111;
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
     }
-    .feature-card h3 {
+    .feature-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      opacity: 0.9;
+      transition: opacity 0.3s, transform 0.5s ease-out;
+    }
+    .feature-img-card:hover .feature-img-wrapper img {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    .feature-img-content {
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .feature-img-content h3 {
       font-size: 16px;
       font-weight: 800;
       margin-bottom: 8px;
       letter-spacing: -0.01em;
     }
-    .feature-card p {
+    .feature-img-content p {
       font-size: 13px;
-      color: #64748B;
+      color: #94A3B8;
       line-height: 1.7;
+      margin-bottom: 0;
     }
 
     /* ─── MOPACK ─── */
@@ -843,35 +863,92 @@
     <p class="section-sub">Built specifically for motion designers and video editors who live in After Effects.</p>
 
     <div class="features-grid">
-      <div class="feature-card fade-up">
-        <div class="feature-icon" style="background:rgba(29,161,255,0.1)">💬</div>
-        <h3>Real-Time Chat</h3>
-        <p>Send messages, images, and files directly inside After Effects. Chat is always in sync with your project context.</p>
+      <!-- 1. Real-Time Chat & Security -->
+      <div class="feature-img-card fade-up">
+        <div class="feature-img-wrapper">
+          <img src="/screenshots/End_to_end_encryption.png" alt="End-To-End Encrypted Chat" />
+        </div>
+        <div class="feature-img-content">
+          <h3>Encrypted Team Chat</h3>
+          <p>Send messages, share DMs, and collaborate securely. E2EE ensures your sensitive client files and projects remain completely private.</p>
+        </div>
       </div>
-      <div class="feature-card fade-up">
-        <div class="feature-icon" style="background:rgba(245,166,35,0.1)">📦</div>
-        <h3>MoPack Video Review</h3>
-        <p>Upload renders and share a link. Anyone can view, timestamp-comment, and annotate — right in the browser.</p>
+
+      <!-- 2. MoPack Video Review -->
+      <div class="feature-img-card fade-up">
+        <div class="feature-img-wrapper">
+          <img src="/screenshots/Mopack.png" alt="MoPack Video Review" />
+        </div>
+        <div class="feature-img-content">
+          <h3>MoPack Cloud Review</h3>
+          <p>Instantly upload renders and share a web link. Clients can drop timestamped feedback and shape annotations right in their browser.</p>
+        </div>
       </div>
-      <div class="feature-card fade-up">
-        <div class="feature-icon" style="background:rgba(139,92,246,0.1)">🔒</div>
-        <h3>End-to-End Encryption</h3>
-        <p>All messages are encrypted by default. Your creative work stays private, always.</p>
+
+      <!-- 3. MoHealth Project Optimizer -->
+      <div class="feature-img-card fade-up">
+        <div class="feature-img-wrapper">
+          <img src="/screenshots/Mohealth.png" alt="MoHealth Project Optimizer" />
+        </div>
+        <div class="feature-img-content">
+          <h3>MoHealth Optimization</h3>
+          <p>Scan your project for memory-hogging assets, duplicate footage, and instantly clear After Effects caches to speed up your workflow.</p>
+        </div>
       </div>
-      <div class="feature-card fade-up">
-        <div class="feature-icon" style="background:rgba(16,185,129,0.1)">🗂️</div>
-        <h3>Project Sharing</h3>
-        <p>Share AE compositions and layers instantly. Your teammates can import directly into their own projects.</p>
+
+      <!-- 4. MoPrompt AI Builder -->
+      <div class="feature-img-card fade-up">
+        <div class="feature-img-wrapper">
+          <img src="/screenshots/MoPrompt.png" alt="MoPrompt AI" />
+        </div>
+        <div class="feature-img-content">
+          <h3>MoPrompt AI Expressions</h3>
+          <p>Don't know code? Just type what you want to achieve, and MoPrompt's advanced AI will instantly generate and apply the ExtendScript or expression.</p>
+        </div>
       </div>
-      <div class="feature-card fade-up">
-        <div class="feature-icon" style="background:rgba(239,68,68,0.1)">🎯</div>
-        <h3>Direct Messages & Groups</h3>
-        <p>One-on-one DMs and group channels. Stay organized whether you're a solo freelancer or large studio.</p>
+
+      <!-- 5. MoTouch Workflow Pie Menu -->
+      <div class="feature-img-card fade-up">
+        <div class="feature-img-wrapper">
+          <img src="/screenshots/Motouch.png" alt="MoTouch Pie Menu" />
+        </div>
+        <div class="feature-img-content">
+          <h3>MoTouch Pie Menus</h3>
+          <p>Speed up repetitive actions. Trigger specialized scripts, macros, and alignments using high-speed, intuitive radial menus.</p>
+        </div>
       </div>
-      <div class="feature-card fade-up">
-        <div class="feature-icon" style="background:rgba(245,166,35,0.1)">⚡</div>
-        <h3>No Context Switching</h3>
-        <p>Open the panel once and your whole team is there. No need to open Slack, email, or Figma just to leave feedback.</p>
+
+      <!-- 6. Free Asset Library -->
+      <div class="feature-img-card fade-up">
+        <div class="feature-img-wrapper">
+          <img src="/screenshots/Pixabay.png" alt="Stock Assets Integration" />
+        </div>
+        <div class="feature-img-content">
+          <h3>Integrated Free Assets</h3>
+          <p>Search Pixabay images, Google Fonts, and SVG icons directly within the panel and apply them straight to your timeline.</p>
+        </div>
+      </div>
+
+      <!-- 7. TemGrid Guides -->
+      <div class="feature-img-card fade-up">
+        <div class="feature-img-wrapper">
+          <img src="/screenshots/TemGrid_Rule_of_Thirds.png" alt="TemGrid UI" />
+        </div>
+        <div class="feature-img-content">
+          <h3>TemGrid Layouts</h3>
+          <p>Toggle Rule of Thirds, Golden Ratio, Isometric, and Safe Area overlays onto your composition instantly for perfect alignments.</p>
+        </div>
+      </div>
+
+      <!-- 8. MoZoom Timeline Nav -->
+      <div class="feature-img-card fade-up">
+        <div class="feature-img-wrapper">
+          <img src="/screenshots/Mozoom.png" alt="MoZoom Nav" />
+        </div>
+        <div class="feature-img-content">
+          <h3>MoZoom Navigation</h3>
+          <p>No more struggling with dense keyframes. Glide through your timeline and navigate layers with absolute precision and ease.</p>
+        </div>
       </div>
     </div>
   </section>
