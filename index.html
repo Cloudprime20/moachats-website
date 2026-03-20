@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MoaChat — Collaborate Inside After Effects</title>
+  <meta name="description"
+    content="MoaChat is the real-time collaboration plugin built for After Effects. Chat, share, review, and iterate — all without leaving your timeline." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #F5A623;
+      --blue: #1DA1FF;
+      --purple: #8B5CF6;
+      --bg: #060608;
+      --surface: #0E0F14;
+      --surface2: #141620;
+      --border: rgba(255,255,255,0.06);
+      --muted: #64748B;
+      --text: #F1F5F9;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── NOISE TEXTURE ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ─── ORBS ─── */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(80px);
+    }
+    .orb-1 {
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(29,161,255,0.12) 0%, transparent 70%);
+      top: -200px; left: -200px;
+      animation: orbFloat1 18s ease-in-out infinite alternate;
+    }
+    .orb-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(245,166,35,0.08) 0%, transparent 70%);
+      bottom: -100px; right: -100px;
+      animation: orbFloat2 22s ease-in-out infinite alternate;
+    }
+    .orb-3 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(139,92,246,0.06) 0%, transparent 70%);
+      top: 40%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation: orbFloat3 16s ease-in-out infinite alternate;
+    }
+    @keyframes orbFloat1 { to { transform: translate(60px, 40px); } }
+    @keyframes orbFloat2 { to { transform: translate(-40px, -60px); } }
+    @keyframes orbFloat3 { to { transform: translate(-50%, -50%) translate(30px, -30px); } }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 68px;
+      background: rgba(6,6,8,0.8);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, #1DA1FF, #8B5CF6);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 14px;
+      color: white;
+      letter-spacing: -0.5px;
+      box-shadow: 0 0 20px rgba(29,161,255,0.3);
+    }
+    .logo-text {
+      font-size: 17px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: -0.02em;
+    }
+    .logo-text span { color: var(--blue); }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: white; }
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-outline {
+      padding: 8px 20px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: #94A3B8;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-outline:hover { border-color: rgba(255,255,255,0.2); color: white; }
+    .btn-primary {
+      padding: 9px 22px;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      border-radius: 8px;
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 4px 20px rgba(29,161,255,0.3);
+    }
+    .btn-primary:hover { box-shadow: 0 8px 30px rgba(29,161,255,0.5); transform: translateY(-1px); }
+
+    /* ─── SECTIONS ─── */
+    section { position: relative; z-index: 1; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+    }
+    .hero-inner { max-width: 860px; }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(29,161,255,0.1);
+      border: 1px solid rgba(29,161,255,0.25);
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 99px;
+      margin-bottom: 28px;
+    }
+    .hero-badge .dot {
+      width: 6px; height: 6px;
+      background: var(--blue);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+    .hero h1 {
+      font-size: clamp(2.6rem, 6vw, 5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 24px;
+    }
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, #fff 0%, #1DA1FF 50%, #8B5CF6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 18px;
+      line-height: 1.7;
+      color: #94A3B8;
+      max-width: 560px;
+      margin: 0 auto 40px;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn-hero {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      border-radius: 12px;
+      color: white;
+      font-size: 15px;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 8px 40px rgba(29,161,255,0.4);
+      transition: all 0.3s;
+    }
+    .btn-hero:hover { box-shadow: 0 12px 50px rgba(29,161,255,0.6); transform: translateY(-2px); }
+    .btn-hero-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: #94A3B8;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .btn-hero-ghost:hover { border-color: rgba(255,255,255,0.2); color: white; transform: translateY(-2px); }
+
+    /* Hero stats */
+    .hero-stats {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      margin-top: 72px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, white 40%, #94A3B8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label { font-size: 12px; color: var(--muted); margin-top: 2px; font-weight: 500; }
+
+    /* ─── MOCKUP / PREVIEW ─── */
+    .preview-section {
+      padding: 40px 24px 120px;
+      display: flex;
+      justify-content: center;
+    }
+    .preview-wrapper {
+      max-width: 1000px;
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
+      position: relative;
+    }
+    .preview-topbar {
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .preview-dots span {
+      display: inline-block;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+    .preview-dots .d1 { background: #FF5F57; }
+    .preview-dots .d2 { background: #FEBC2E; }
+    .preview-dots .d3 { background: #28C840; }
+    .preview-url {
+      flex: 1;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 5px 14px;
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+      margin: 0 16px;
+    }
+    .preview-body {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      min-height: 380px;
+    }
+    .preview-player {
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .preview-play-btn {
+      width: 64px; height: 64px;
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+    }
+    .preview-play-btn svg { margin-left: 4px; }
+    .preview-timeline {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 50px;
+      background: rgba(0,0,0,0.8);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 12px;
+    }
+    .timeline-bar {
+      flex: 1;
+      height: 6px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 3px;
+      position: relative;
+    }
+    .timeline-progress {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 40%;
+      background: linear-gradient(90deg, var(--blue), var(--purple));
+      border-radius: 3px;
+    }
+    .preview-sidebar {
+      border-left: 1px solid var(--border);
+      background: var(--surface2);
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+    }
+    .comment-item {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .comment-user {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .comment-avatar {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 800;
+      color: white;
+    }
+    .comment-name { font-size: 11px; font-weight: 700; }
+    .comment-time { font-size: 10px; color: var(--muted); margin-left: auto; }
+    .comment-text { font-size: 11px; color: #94A3B8; line-height: 1.5; }
+    .comment-ts {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 9px;
+      font-weight: 700;
+      background: rgba(29,161,255,0.15);
+      color: var(--blue);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* ─── FEATURES ─── */
+    .features-section {
+      padding: 80px 24px 120px;
+    }
+    .section-eyebrow {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 14px;
+    }
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      text-align: center;
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 72px;
+      line-height: 1.7;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .feature-card:hover {
+      border-color: rgba(29,161,255,0.3);
+      transform: translateY(-4px);
+    }
+    .feature-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+      font-size: 22px;
+    }
+    .feature-card h3 {
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+    .feature-card p {
+      font-size: 13px;
+      color: #64748B;
+      line-height: 1.7;
+    }
+
+    /* ─── MOPACK ─── */
+    .mopack-section {
+      padding: 80px 24px 120px;
+      background: linear-gradient(180deg, transparent 0%, rgba(29,161,255,0.02) 50%, transparent 100%);
+    }
+    .mopack-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .mopack-text h2 {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+    .mopack-text p {
+      font-size: 15px;
+      color: #64748B;
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+    .mopack-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .mopack-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: #94A3B8;
+    }
+    .mopack-features li::before {
+      content: '✓';
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 13px;
+    }
+    .mopack-visual {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 20px 80px rgba(0,0,0,0.4);
+    }
+    .mopack-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .mopack-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 0 8px rgba(29,161,255,0.6);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .mopack-title { font-size: 13px; font-weight: 700; }
+    .mopack-thumb {
+      background: linear-gradient(135deg, rgba(29,161,255,0.1), rgba(139,92,246,0.1));
+      border: 1px solid rgba(29,161,255,0.15);
+      border-radius: 10px;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .mopack-thumb::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(29,161,255,0.05), transparent);
+    }
+    .share-link-box {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(29,161,255,0.2);
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .share-link-text {
+      font-size: 11px;
+      font-family: monospace;
+      color: var(--blue);
+      opacity: 0.8;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .share-copy-btn {
+      background: var(--blue);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    /* ─── PRICING CTA ─── */
+    .pricing-cta {
+      padding: 80px 24px 120px;
+    }
+    .pricing-cta-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      background: linear-gradient(145deg, rgba(29,161,255,0.1), rgba(139,92,246,0.08), rgba(10,10,20,0.8));
+      border: 1px solid rgba(29,161,255,0.2);
+      border-radius: 24px;
+      padding: 64px 48px;
+      text-align: center;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
+    }
+    .pricing-cta-inner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(29,161,255,0.5), transparent);
+    }
+    .pricing-cta h2 {
+      font-size: clamp(1.9rem, 3vw, 2.8rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+    .pricing-cta p {
+      font-size: 15px;
+      color: #64748B;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+    .pricing-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 40px;
+      background: linear-gradient(135deg, var(--gold), #FBBF24);
+      border-radius: 12px;
+      color: #1a0d00;
+      font-size: 16px;
+      font-weight: 900;
+      text-decoration: none;
+      box-shadow: 0 8px 40px rgba(245,166,35,0.4);
+      transition: all 0.3s;
+    }
+    .pricing-btn:hover { box-shadow: 0 12px 50px rgba(245,166,35,0.6); transform: translateY(-2px) scale(1.02); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 48px 48px 40px;
+    }
+    .footer-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .footer-copy { font-size: 12px; color: #374151; }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 12px;
+      color: #374151;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--muted); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .mopack-inner { grid-template-columns: 1fr; gap: 40px; }
+      .preview-body { grid-template-columns: 1fr; }
+      .preview-sidebar { display: none; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+      .pricing-cta-inner { padding: 40px 24px; }
+    }
+
+    /* ─── SCROLL ANIMATIONS ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- ─── NAV ─── -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <div class="logo-icon">Mc</div>
+      <span class="logo-text">Moa<span>Chat</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#mopack">MoPack</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="https://aescripts.com/moachat/" target="_blank">aescripts</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="pricing.html" class="btn-outline">View Plans</a>
+      <a href="https://aescripts.com/moachat/" target="_blank" class="btn-primary">Get Plugin →</a>
+    </div>
+  </nav>
+
+  <!-- ─── HERO ─── -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Real-time collaboration for After Effects
+      </div>
+      <h1>
+        <span class="gradient-text">Collaborate</span><br />
+        Inside Your Timeline
+      </h1>
+      <p class="hero-sub">
+        MoaChat brings chat, video review, and team communication directly into After Effects.
+        No more switching apps — stay in your creative flow.
+      </p>
+      <div class="hero-actions">
+        <a href="https://aescripts.com/moachat/" target="_blank" class="btn-hero">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+          </svg>
+          Download Plugin
+        </a>
+        <a href="pricing.html" class="btn-hero-ghost">
+          View Pricing →
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">Real-time</div>
+          <div class="stat-label">Team Messaging</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">E2EE</div>
+          <div class="stat-label">Encrypted by Default</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">MoPack</div>
+          <div class="stat-label">Video Review System</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">CC+</div>
+          <div class="stat-label">After Effects Support</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PREVIEW / MOCKUP ─── -->
+  <section class="preview-section fade-up">
+    <div class="preview-wrapper">
+      <div class="preview-topbar">
+        <div class="preview-dots">
+          <span class="d1"></span>
+          <span class="d2"></span>
+          <span class="d3"></span>
+        </div>
+        <div class="preview-url">moachats.shop/mopack · MoPack Video Review</div>
+      </div>
+      <div class="preview-body">
+        <div class="preview-player">
+          <div class="preview-play-btn">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </div>
+          <div class="preview-timeline">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white" opacity="0.6">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            <div class="timeline-bar">
+              <div class="timeline-progress"></div>
+            </div>
+            <span style="font-size:11px; color:#64748B; font-family:monospace;">0:42 / 1:55</span>
+          </div>
+        </div>
+        <div class="preview-sidebar">
+          <div class="sidebar-header">Comments · 3</div>
+          <div class="comment-item">
+            <div class="comment-user">
+              <div class="comment-avatar" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6)">S</div>
+              <span class="comment-name" style="color:#93C5FD">Sara</span>
+              <span class="comment-time">0:14</span>
+            </div>
+            <div class="comment-text">This transition feels too fast, can we ease it out more?</div>
+            <span class="comment-ts">0:14</span>
+          </div>
+          <div class="comment-item">
+            <div class="comment-user">
+              <div class="comment-avatar" style="background:linear-gradient(135deg,#10b981,#059669)">A</div>
+              <span class="comment-name" style="color:#6EE7B7">Alex</span>
+              <span class="comment-time">0:32</span>
+            </div>
+            <div class="comment-text">Love the color grade here ✨</div>
+            <span class="comment-ts">0:32</span>
+          </div>
+          <div class="comment-item">
+            <div class="comment-user">
+              <div class="comment-avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">K</div>
+              <span class="comment-name" style="color:#FCD34D">Kim</span>
+              <span class="comment-time">0:42</span>
+            </div>
+            <div class="comment-text">Text is overlapping the logo at this frame</div>
+            <span class="comment-ts">0:42</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FEATURES ─── -->
+  <section id="features" class="features-section">
+    <div class="section-eyebrow">What's Inside</div>
+    <h2 class="section-title">Everything Your Team Needs</h2>
+    <p class="section-sub">Built specifically for motion designers and video editors who live in After Effects.</p>
+
+    <div class="features-grid">
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:rgba(29,161,255,0.1)">💬</div>
+        <h3>Real-Time Chat</h3>
+        <p>Send messages, images, and files directly inside After Effects. Chat is always in sync with your project context.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:rgba(245,166,35,0.1)">📦</div>
+        <h3>MoPack Video Review</h3>
+        <p>Upload renders and share a link. Anyone can view, timestamp-comment, and annotate — right in the browser.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:rgba(139,92,246,0.1)">🔒</div>
+        <h3>End-to-End Encryption</h3>
+        <p>All messages are encrypted by default. Your creative work stays private, always.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:rgba(16,185,129,0.1)">🗂️</div>
+        <h3>Project Sharing</h3>
+        <p>Share AE compositions and layers instantly. Your teammates can import directly into their own projects.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:rgba(239,68,68,0.1)">🎯</div>
+        <h3>Direct Messages & Groups</h3>
+        <p>One-on-one DMs and group channels. Stay organized whether you're a solo freelancer or large studio.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon" style="background:rgba(245,166,35,0.1)">⚡</div>
+        <h3>No Context Switching</h3>
+        <p>Open the panel once and your whole team is there. No need to open Slack, email, or Figma just to leave feedback.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── MOPACK ─── -->
+  <section id="mopack" class="mopack-section">
+    <div class="mopack-inner">
+      <div class="mopack-text fade-up">
+        <div class="section-eyebrow" style="text-align:left;margin-bottom:12px;">MoPack</div>
+        <h2>Share Your Renders.<br />Get Feedback Fast.</h2>
+        <p>
+          Upload a video to MoPack, click Share, and instantly get a link anyone can open in a browser —
+          no login required to view, login to comment. Reviewers can drop timestamped notes and draw directly
+          on the video.
+        </p>
+        <ul class="mopack-features">
+          <li>Cloud video storage (3 GB lifetime on Pro)</li>
+          <li>Timestamped comments + shape annotations</li>
+          <li>Shareable link — works on any device</li>
+          <li>Mark feedback as solved / rejected</li>
+          <li>Unlimited videos, unlimited reviewers</li>
+        </ul>
+      </div>
+      <div class="mopack-visual fade-up">
+        <div class="mopack-header">
+          <div class="mopack-dot"></div>
+          <span class="mopack-title">MoPack · Brand Animation v3</span>
+        </div>
+        <div class="mopack-thumb">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="rgba(29,161,255,0.5)">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+        <div style="font-size:11px;color:#374151;margin-bottom:10px;">Share this project with anyone:</div>
+        <div class="share-link-box">
+          <span class="share-link-text">https://moachats.shop/mopack?project_id=abc&video_id=xyz</span>
+          <button class="share-copy-btn">Copy</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:14px;">
+          <div style="width:6px;height:6px;border-radius:50%;background:#10B981"></div>
+          <span style="font-size:11px;color:#374151">3 people have already viewed this</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PRICING CTA ─── -->
+  <section class="pricing-cta">
+    <div class="pricing-cta-inner fade-up">
+      <div style="font-size:40px;margin-bottom:20px;">✨</div>
+      <h2>Ready to Upgrade Your Workflow?</h2>
+      <p>One-time purchase or flexible subscription — choose the plan that fits how you work.</p>
+      <a href="pricing.html" class="pricing-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </svg>
+        View Pricing Plans
+      </a>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-copy">© 2025 MoaChat. All rights reserved. moachats.shop</div>
+      <ul class="footer-links">
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="mopack.html">MoPack Viewer</a></li>
+        <li><a href="https://aescripts.com/moachat/" target="_blank">aescripts</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

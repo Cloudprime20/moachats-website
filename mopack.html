@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MoPack — Video Review</title>
+  <meta name="description" content="Review and comment on MoPack videos shared from MoaChat." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue: #1DA1FF;
+      --purple: #8B5CF6;
+      --gold: #F5A623;
+      --bg: #0A0A0A;
+      --surface: #111111;
+      --surface2: #1A1A1A;
+      --border: rgba(255,255,255,0.06);
+      --muted: #64748B;
+      --text: #F1F5F9;
+    }
+    html, body { height: 100%; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    /* ── TOPBAR ── */
+    #topbar {
+      height: 52px;
+      background: #0A0A0A;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      flex-shrink: 0;
+      z-index: 50;
+    }
+    .tb-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .tb-logo-icon {
+      width: 28px; height: 28px;
+      background: linear-gradient(135deg, #1DA1FF, #8B5CF6);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 900;
+      color: white;
+    }
+    .tb-logo-text { font-size: 14px; font-weight: 800; color: white; }
+    .tb-logo-text span { color: var(--blue); }
+    .tb-project-name { font-size: 13px; font-weight: 700; color: white; }
+    .tb-project-sub { font-size: 11px; color: var(--muted); }
+    .tb-right { display: flex; align-items: center; gap: 10px; }
+    .tb-user-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 12px;
+      color: #94A3B8;
+    }
+    .tb-avatar {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 800;
+      color: white;
+    }
+    .tb-login-btn {
+      padding: 6px 16px;
+      background: var(--blue);
+      border: none;
+      border-radius: 7px;
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tb-login-btn:hover { background: #1a91e8; }
+    .tb-home-link {
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: color 0.2s;
+    }
+    .tb-home-link:hover { color: white; }
+
+    /* ── LAYOUT ── */
+    #layout {
+      display: flex;
+      height: calc(100vh - 52px);
+    }
+
+    /* ── PLAYER AREA ── */
+    #player-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: #000;
+      overflow: hidden;
+    }
+    #video-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: #000;
+      overflow: hidden;
+    }
+    #main-video {
+      max-width: 100%;
+      max-height: 100%;
+      display: block;
+      outline: none;
+    }
+
+    /* ── CONTROLS ── */
+    #controls {
+      height: 64px;
+      background: #0A0A0A;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 16px;
+      flex-shrink: 0;
+    }
+    .ctrl-btn {
+      width: 36px; height: 36px;
+      border: none;
+      border-radius: 50%;
+      background: var(--surface2);
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .ctrl-btn:hover { background: #2a2a2a; }
+    .ctrl-btn.play-btn {
+      width: 40px; height: 40px;
+      background: white;
+      color: black;
+      flex-shrink: 0;
+    }
+    .ctrl-btn.play-btn:hover { background: #e0e0e0; }
+    #timeline {
+      flex: 1;
+      height: 6px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 3px;
+      cursor: pointer;
+      position: relative;
+      overflow: visible;
+    }
+    #timeline-fill {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      background: var(--blue);
+      border-radius: 3px;
+      pointer-events: none;
+      width: 0%;
+      transition: width 0.1s;
+    }
+    #timeline-thumb {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 14px; height: 14px;
+      background: white;
+      border-radius: 50%;
+      pointer-events: none;
+      left: 0%;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    .ctrl-time { font-size: 11px; font-family: monospace; color: #64748B; white-space: nowrap; }
+
+    /* Comment markers on timeline */
+    .timeline-marker {
+      position: absolute;
+      top: -3px;
+      width: 3px; height: 12px;
+      background: var(--gold);
+      border-radius: 2px;
+      transform: translateX(-50%);
+      pointer-events: all;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+    .timeline-marker:hover { transform: translateX(-50%) scaleY(1.4); }
+
+    /* ── SIDEBAR ── */
+    #sidebar {
+      width: 320px;
+      background: #0A0A0A;
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+    #sidebar-header {
+      height: 48px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      background: #111;
+    }
+    #sidebar-header h3 { font-size: 13px; font-weight: 700; }
+    #comment-count {
+      background: var(--blue);
+      color: white;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 99px;
+    }
+    #comments-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    #comments-list::-webkit-scrollbar { width: 4px; }
+    #comments-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
+
+    .comment-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .comment-card:hover { border-color: rgba(29,161,255,0.3); background: #1e1e1e; }
+    .comment-card.active { border-color: rgba(29,161,255,0.5); background: rgba(29,161,255,0.06); }
+    .comment-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .c-avatar {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: 800;
+      color: white;
+      flex-shrink: 0;
+    }
+    .c-name { font-size: 11px; font-weight: 700; }
+    .c-ts {
+      margin-left: auto;
+      font-size: 10px;
+      font-weight: 700;
+      background: rgba(29,161,255,0.12);
+      color: var(--blue);
+      padding: 2px 7px;
+      border-radius: 5px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .c-ts:hover { background: rgba(29,161,255,0.25); }
+    .c-text { font-size: 12px; color: #94A3B8; line-height: 1.5; }
+    .c-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 6px;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+    .c-status.solved { background: rgba(16,185,129,0.12); color: #10B981; }
+    .c-status.rejected { background: rgba(239,68,68,0.1); color: #EF4444; }
+
+    /* ── INPUT AREA ── */
+    #input-area {
+      border-top: 1px solid var(--border);
+      padding: 12px;
+      background: #0A0A0A;
+    }
+    #ts-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    #current-ts-badge {
+      background: var(--gold);
+      color: #1a0d00;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 5px;
+      font-family: monospace;
+    }
+    #ts-label { font-size: 11px; color: var(--muted); }
+    #comment-input-row { display: flex; gap: 8px; align-items: flex-end; }
+    #comment-input {
+      flex: 1;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: white;
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      resize: none;
+      outline: none;
+      transition: border-color 0.2s;
+      min-height: 80px;
+      max-height: 120px;
+    }
+    #comment-input:focus { border-color: rgba(29,161,255,0.4); }
+    #comment-input::placeholder { color: #374151; }
+    #send-btn {
+      width: 38px; height: 38px;
+      background: var(--blue);
+      border: none;
+      border-radius: 9px;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+      align-self: flex-end;
+    }
+    #send-btn:hover { background: #1a91e8; transform: scale(1.05); }
+    #send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    #login-prompt {
+      display: none;
+      text-align: center;
+      padding: 16px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    #login-prompt .login-link {
+      color: var(--blue);
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* ── LOADING / ERROR STATES ── */
+    #loading-overlay {
+      position: fixed;
+      inset: 0;
+      background: #0A0A0A;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      z-index: 200;
+    }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid rgba(29,161,255,0.2);
+      border-top-color: var(--blue);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #loading-overlay .load-title { font-size: 16px; font-weight: 700; }
+    #loading-overlay .load-sub { font-size: 12px; color: var(--muted); }
+
+    /* ── LOGIN MODAL ── */
+    #login-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 300;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+    }
+    #login-modal.open { display: flex; }
+    .modal-box {
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 18px;
+      padding: 40px;
+      width: 400px;
+      max-width: 90vw;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.7);
+    }
+    .modal-logo {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 900;
+      color: white;
+      margin: 0 auto 20px;
+    }
+    .modal-box h2 { font-size: 20px; font-weight: 900; text-align: center; margin-bottom: 6px; }
+    .modal-box p { font-size: 13px; color: var(--muted); text-align: center; margin-bottom: 24px; }
+    .modal-input {
+      width: 100%;
+      background: #1a1a1a;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: white;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+      margin-bottom: 12px;
+    }
+    .modal-input:focus { border-color: rgba(29,161,255,0.5); }
+    .modal-submit {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 12px;
+    }
+    .modal-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+    .modal-error {
+      color: #EF4444;
+      font-size: 12px;
+      text-align: center;
+      margin-bottom: 8px;
+      display: none;
+    }
+    .modal-close-btn {
+      width: 100%;
+      padding: 10px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .modal-close-btn:hover { border-color: rgba(255,255,255,0.2); color: white; }
+    #modal-auth-toggle { font-size: 12px; text-align: center; color: var(--muted); margin-top: 12px; }
+    #modal-auth-toggle span { color: var(--blue); cursor: pointer; font-weight: 600; }
+
+    /* ── NOT FOUND ── */
+    #not-found {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #0A0A0A;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      text-align: center;
+      padding: 24px;
+      z-index: 200;
+    }
+    #not-found.show { display: flex; }
+
+    @media (max-width: 640px) {
+      #sidebar { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Loading overlay -->
+  <div id="loading-overlay">
+    <div class="spinner"></div>
+    <div class="load-title">Loading MoPack...</div>
+    <div class="load-sub">Fetching your video</div>
+  </div>
+
+  <!-- Not Found -->
+  <div id="not-found">
+    <div style="font-size:48px">📦</div>
+    <h2 style="font-size:22px;font-weight:900">Video not found</h2>
+    <p style="color:var(--muted);font-size:14px;max-width:360px">This link may have expired, or you don't have permission to view this video.</p>
+    <a href="/" style="margin-top:12px;padding:10px 28px;background:var(--blue);color:white;border-radius:10px;font-weight:700;text-decoration:none;font-size:14px;">Go Home</a>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="login-modal">
+    <div class="modal-box">
+      <div class="modal-logo">Mc</div>
+      <h2 id="modal-title">Sign in to Comment</h2>
+      <p id="modal-sub">View is public — sign in to leave feedback on this video.</p>
+      <div id="modal-error" class="modal-error"></div>
+      <input id="modal-email" class="modal-input" type="email" placeholder="Email address" />
+      <input id="modal-pass" class="modal-input" type="password" placeholder="Password" id="modal-pass" />
+      <button class="modal-submit" id="modal-submit-btn">Sign In</button>
+      <button class="modal-close-btn" onclick="document.getElementById('login-modal').classList.remove('open')">Maybe Later</button>
+      <div id="modal-auth-toggle">Don't have an account? <span id="modal-toggle-link">Sign up</span></div>
+    </div>
+  </div>
+
+  <!-- Topbar -->
+  <div id="topbar">
+    <a href="/" class="tb-logo">
+      <div class="tb-logo-icon">Mc</div>
+      <span class="tb-logo-text">Moa<span>Chat</span></span>
+    </a>
+    <div id="tb-center">
+      <div class="tb-project-name" id="tb-project-name">Loading...</div>
+      <div class="tb-project-sub">MoPack Video Review</div>
+    </div>
+    <div class="tb-right">
+      <a href="/" class="tb-home-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+        Home
+      </a>
+      <div id="tb-auth-area">
+        <button class="tb-login-btn" id="tb-login-btn" onclick="openLoginModal()">Sign In</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Layout -->
+  <div id="layout">
+
+    <!-- Player -->
+    <div id="player-area">
+      <div id="video-container">
+        <video id="main-video" preload="metadata"></video>
+      </div>
+      <div id="controls">
+        <button class="ctrl-btn play-btn" id="play-btn" title="Play/Pause">
+          <svg id="play-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <div id="timeline" title="Click to seek">
+          <div id="timeline-fill"></div>
+          <div id="timeline-thumb"></div>
+        </div>
+        <span class="ctrl-time" id="ctrl-time">0:00 / 0:00</span>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar">
+      <div id="sidebar-header">
+        <h3>Feedback</h3>
+        <span id="comment-count">0</span>
+      </div>
+      <div id="comments-list">
+        <div style="text-align:center;padding:40px 20px;color:var(--muted);font-size:13px;">
+          No comments yet.<br/>Be the first to leave feedback.
+        </div>
+      </div>
+      <div id="input-area">
+        <div id="ts-indicator">
+          <span id="current-ts-badge">0:00</span>
+          <span id="ts-label">Frame comment</span>
+        </div>
+        <div id="comment-input-row">
+          <textarea id="comment-input" placeholder="Leave feedback at this timestamp..." rows="3" maxlength="500"></textarea>
+          <button id="send-btn" title="Send Comment" disabled>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+          </button>
+        </div>
+        <div id="login-prompt">
+          <span class="login-link" onclick="openLoginModal()">Sign in</span> to leave feedback on this video.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+  <script>
+    // ─── CONFIG ───────────────────────────────────────────────────────────────
+    const SUPABASE_URL = 'https://oggfsxplhphagzaxwjli.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_gJVpgqaR34mnJNVMttccvw_FrJ2cnOY';
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // ─── URL PARAMS ───────────────────────────────────────────────────────────
+    const urlParams = new URLSearchParams(window.location.search);
+    const PROJECT_ID = urlParams.get('project_id');
+    const VIDEO_ID = urlParams.get('video_id');
+
+    // ─── STATE ────────────────────────────────────────────────────────────────
+    let currentUser = null;
+    let currentSession = null;
+    let videoItem = null;
+    let comments = [];
+    let currentTime = 0;
+    let duration = 0;
+
+    const video = document.getElementById('main-video');
+    const playBtn = document.getElementById('play-btn');
+    const playIcon = document.getElementById('play-icon');
+    const timelineFill = document.getElementById('timeline-fill');
+    const timelineEl = document.getElementById('timeline-thumb');
+    const ctrlTime = document.getElementById('ctrl-time');
+    const commentInput = document.getElementById('comment-input');
+    const sendBtn = document.getElementById('send-btn');
+    const commentsList = document.getElementById('comments-list');
+    const commentCount = document.getElementById('comment-count');
+    const currentTsBadge = document.getElementById('current-ts-badge');
+    const loginPrompt = document.getElementById('login-prompt');
+    const inputAreaInner = document.getElementById('comment-input-row');
+
+    // ─── HELPERS ─────────────────────────────────────────────────────────────
+    const fmt = (s) => {
+      const m = Math.floor(s / 60);
+      const sec = Math.floor(s % 60);
+      return `${m}:${sec.toString().padStart(2, '0')}`;
+    };
+
+    const colorForName = (name) => {
+      const colors = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444', '#06b6d4', '#ec4899'];
+      const idx = name.split('').reduce((a, c) => a + c.charCodeAt(0), 0) % colors.length;
+      return colors[idx];
+    };
+
+    // ─── AUTH ─────────────────────────────────────────────────────────────────
+    sb.auth.onAuthStateChange((event, session) => {
+      currentSession = session;
+      currentUser = session?.user ?? null;
+      updateAuthUI();
+    });
+
+    async function initAuth() {
+      const { data: { session } } = await sb.auth.getSession();
+      currentSession = session;
+      currentUser = session?.user ?? null;
+      updateAuthUI();
+    }
+
+    function updateAuthUI() {
+      const authArea = document.getElementById('tb-auth-area');
+      if (currentUser) {
+        const email = currentUser.email || '';
+        const name = email.split('@')[0];
+        authArea.innerHTML = `
+          <div class="tb-user-badge">
+            <div class="tb-avatar">${name.charAt(0).toUpperCase()}</div>
+            <span>${name}</span>
+          </div>`;
+        inputAreaInner.style.display = 'flex';
+        loginPrompt.style.display = 'none';
+        sendBtn.disabled = !commentInput.value.trim();
+      } else {
+        authArea.innerHTML = `<button class="tb-login-btn" onclick="openLoginModal()">Sign In</button>`;
+        inputAreaInner.style.display = 'none';
+        loginPrompt.style.display = 'block';
+      }
+    }
+
+    // ─── LOGIN MODAL ──────────────────────────────────────────────────────────
+    let isSignUp = false;
+    function openLoginModal() {
+      document.getElementById('login-modal').classList.add('open');
+    }
+    document.getElementById('modal-toggle-link').addEventListener('click', () => {
+      isSignUp = !isSignUp;
+      document.getElementById('modal-title').textContent = isSignUp ? 'Create Account' : 'Sign in to Comment';
+      document.getElementById('modal-sub').textContent = isSignUp ? 'Create a MoaChat account to leave feedback.' : 'View is public — sign in to leave feedback on this video.';
+      document.getElementById('modal-submit-btn').textContent = isSignUp ? 'Create Account' : 'Sign In';
+      document.getElementById('modal-toggle-link').textContent = isSignUp ? 'Sign in' : 'Sign up';
+      document.getElementById('modal-auth-toggle').firstChild.textContent = isSignUp ? 'Already have an account? ' : "Don't have an account? ";
+    });
+
+    document.getElementById('modal-submit-btn').addEventListener('click', async () => {
+      const email = document.getElementById('modal-email').value.trim();
+      const pass = document.getElementById('modal-pass').value;
+      const errEl = document.getElementById('modal-error');
+      errEl.style.display = 'none';
+      if (!email || !pass) { errEl.textContent = 'Please fill in all fields.'; errEl.style.display = 'block'; return; }
+      const btn = document.getElementById('modal-submit-btn');
+      btn.textContent = 'Please wait...'; btn.disabled = true;
+      try {
+        let result;
+        if (isSignUp) {
+          result = await sb.auth.signUp({ email, password: pass });
+        } else {
+          result = await sb.auth.signInWithPassword({ email, password: pass });
+        }
+        if (result.error) throw result.error;
+        document.getElementById('login-modal').classList.remove('open');
+      } catch (e) {
+        errEl.textContent = e.message || 'Authentication failed.';
+        errEl.style.display = 'block';
+      } finally {
+        btn.textContent = isSignUp ? 'Create Account' : 'Sign In';
+        btn.disabled = false;
+      }
+    });
+
+    // ─── VIDEO CONTROLS ───────────────────────────────────────────────────────
+    playBtn.addEventListener('click', () => {
+      if (video.paused) video.play(); else video.pause();
+    });
+
+    video.addEventListener('play', () => {
+      playIcon.innerHTML = `<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>`;
+    });
+    video.addEventListener('pause', () => {
+      playIcon.innerHTML = `<path d="M8 5v14l11-7z"/>`;
+    });
+
+    video.addEventListener('timeupdate', () => {
+      currentTime = video.currentTime;
+      duration = video.duration || 0;
+      const pct = duration > 0 ? (currentTime / duration) * 100 : 0;
+      document.getElementById('timeline-fill').style.width = pct + '%';
+      document.getElementById('timeline-thumb').style.left = pct + '%';
+      ctrlTime.textContent = `${fmt(currentTime)} / ${fmt(duration)}`;
+      currentTsBadge.textContent = fmt(currentTime);
+    });
+
+    video.addEventListener('loadedmetadata', () => {
+      duration = video.duration;
+      renderCommentMarkers();
+    });
+
+    const timelineTrack = document.getElementById('timeline');
+    timelineTrack.addEventListener('click', (e) => {
+      const rect = timelineTrack.getBoundingClientRect();
+      const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      video.currentTime = pct * duration;
+    });
+
+    video.addEventListener('click', () => {
+      if (video.paused) video.play(); else video.pause();
+    });
+
+    commentInput.addEventListener('input', () => {
+      if (currentUser) sendBtn.disabled = !commentInput.value.trim();
+    });
+    commentInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendComment(); }
+    });
+    sendBtn.addEventListener('click', sendComment);
+
+    // ─── SEND COMMENT ─────────────────────────────────────────────────────────
+    async function sendComment() {
+      if (!currentUser || !commentInput.value.trim() || !VIDEO_ID) return;
+      const text = commentInput.value.trim();
+      const ts = video.currentTime;
+      const wasPlaying = !video.paused;
+      video.pause();
+
+      // Get user display name
+      let displayName = currentUser.email?.split('@')[0] || 'Anonymous';
+      try {
+        const { data: prof } = await sb.from('profiles').select('display_name').eq('id', currentUser.id).single();
+        if (prof?.display_name) displayName = prof.display_name;
+      } catch (e) { }
+
+      const { data, error } = await sb.from('mopack_comments').insert([{
+        video_item_id: VIDEO_ID,
+        project_id: PROJECT_ID,
+        user_id: currentUser.id,
+        text: text,
+        timestamp: ts,
+        type: 'text',
+        status: 'active',
+        user_name: displayName
+      }]).select().single();
+
+      if (!error && data) {
+        commentInput.value = '';
+        sendBtn.disabled = true;
+        comments.push({
+          id: data.id,
+          text: data.text,
+          timestamp: data.timestamp,
+          status: data.status,
+          user: { name: displayName, avatar: null },
+          type: 'text'
+        });
+        renderComments();
+        renderCommentMarkers();
+        if (wasPlaying) video.play();
+      } else {
+        alert('Failed to save comment: ' + (error?.message || 'Unknown'));
+      }
+    }
+
+    // ─── RENDER COMMENTS ──────────────────────────────────────────────────────
+    function renderComments() {
+      commentCount.textContent = comments.length;
+      if (comments.length === 0) {
+        commentsList.innerHTML = `<div style="text-align:center;padding:40px 20px;color:var(--muted);font-size:13px;">No feedback yet.<br/>Be the first to leave a comment.</div>`;
+        return;
+      }
+      const sorted = [...comments].sort((a, b) => a.timestamp - b.timestamp);
+      commentsList.innerHTML = sorted.map(c => {
+        const color = colorForName(c.user?.name || 'A');
+        const statusHtml = c.status === 'solved'
+          ? `<span class="c-status solved">✓ Solved</span>`
+          : c.status === 'rejected'
+            ? `<span class="c-status rejected">✗ Rejected</span>`
+            : '';
+        return `
+          <div class="comment-card" data-ts="${c.timestamp}" data-id="${c.id}" onclick="seekTo(${c.timestamp}, this)">
+            <div class="comment-header">
+              <div class="c-avatar" style="background:${color}">${(c.user?.name || 'A').charAt(0).toUpperCase()}</div>
+              <span class="c-name" style="color:${color}">${c.user?.name || 'Anonymous'}</span>
+              <span class="c-ts" onclick="event.stopPropagation();seekTo(${c.timestamp})">${fmt(c.timestamp)}</span>
+            </div>
+            <div class="c-text">${escapeHtml(c.text)}</div>
+            ${statusHtml}
+          </div>`;
+      }).join('');
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function seekTo(ts, card) {
+      video.currentTime = ts;
+      document.querySelectorAll('.comment-card').forEach(c => c.classList.remove('active'));
+      if (card) card.classList.add('active');
+    }
+
+    function renderCommentMarkers() {
+      document.querySelectorAll('.timeline-marker').forEach(m => m.remove());
+      if (!duration) return;
+      comments.forEach(c => {
+        const pct = (c.timestamp / duration) * 100;
+        const m = document.createElement('div');
+        m.className = 'timeline-marker';
+        m.style.left = pct + '%';
+        m.title = `${fmt(c.timestamp)} — ${c.user?.name}: ${c.text}`;
+        m.onclick = (e) => { e.stopPropagation(); seekTo(c.timestamp); };
+        timelineTrack.appendChild(m);
+      });
+    }
+
+    // ─── LOAD VIDEO ───────────────────────────────────────────────────────────
+    async function loadVideo() {
+      if (!VIDEO_ID) {
+        document.getElementById('loading-overlay').style.display = 'none';
+        document.getElementById('not-found').classList.add('show');
+        return;
+      }
+
+      try {
+        // Load video item
+        const { data: item, error: itemErr } = await sb
+          .from('mopack_items')
+          .select('*')
+          .eq('id', VIDEO_ID)
+          .single();
+
+        if (itemErr || !item) throw new Error('Video not found');
+        videoItem = item;
+
+        document.title = `${item.name} — MoPack`;
+        document.getElementById('tb-project-name').textContent = item.name;
+
+        video.src = item.url;
+        video.load();
+
+        // If project is provided, auto-join as viewer
+        if (PROJECT_ID && currentUser) {
+          await sb.from('mopack_project_members')
+            .upsert({ project_id: PROJECT_ID, user_id: currentUser.id, role: 'viewer' }, { onConflict: 'project_id,user_id' });
+        }
+
+        // Load comments
+        const { data: comms } = await sb
+          .from('mopack_comments')
+          .select('*')
+          .eq('video_item_id', VIDEO_ID)
+          .order('timestamp', { ascending: true });
+
+        if (comms) {
+          // Fetch user profiles for display names
+          const userIds = [...new Set(comms.map(c => c.user_id).filter(Boolean))];
+          let profileMap = {};
+          if (userIds.length > 0) {
+            const { data: profiles } = await sb.from('profiles').select('id, display_name, avatar_url').in('id', userIds);
+            if (profiles) profiles.forEach(p => { profileMap[p.id] = p; });
+          }
+
+          comments = comms.map(c => ({
+            id: c.id,
+            text: c.text,
+            timestamp: parseFloat(c.timestamp) || 0,
+            status: c.status || 'active',
+            type: c.type || 'text',
+            user: {
+              name: (profileMap[c.user_id]?.display_name) || c.user_name || 'Anonymous',
+              avatar: profileMap[c.user_id]?.avatar_url || null
+            }
+          }));
+        }
+
+        renderComments();
+
+        // Subscribe to new comments
+        sb.channel(`mopack-comments-${VIDEO_ID}`)
+          .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'mopack_comments', filter: `video_item_id=eq.${VIDEO_ID}` }, payload => {
+            const c = payload.new;
+            if (comments.find(x => x.id === c.id)) return; // dedupe
+            comments.push({
+              id: c.id,
+              text: c.text,
+              timestamp: parseFloat(c.timestamp) || 0,
+              status: c.status || 'active',
+              type: c.type || 'text',
+              user: { name: c.user_name || 'Anonymous', avatar: null }
+            });
+            renderComments();
+            renderCommentMarkers();
+          })
+          .subscribe();
+
+      } catch (err) {
+        console.error('Error loading video:', err);
+        document.getElementById('not-found').classList.add('show');
+      } finally {
+        document.getElementById('loading-overlay').style.display = 'none';
+      }
+    }
+
+    // ─── INIT ─────────────────────────────────────────────────────────────────
+    (async () => {
+      await initAuth();
+      await loadVideo();
+    })();
+  </script>
+
+</body>
+</html>
