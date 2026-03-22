@@ -221,7 +221,7 @@ const modifiedHtml = indexHtmlContent.substring(0, topIndex) + newHtmlContent + 
 const styles = `
     .carousel-container {
         position: relative; overflow: hidden; height: 500px; width: 100%;
-        background: transparent;
+        background: transparent !important; border: none !important; box-shadow: none !important;
     }
     .carousel-track {
         display: flex; height: 100%; width: 100%; position: relative; overflow: hidden;
@@ -236,6 +236,7 @@ const styles = `
     .carousel-slide img { 
         max-width: 100%; max-height: 100%; object-fit: contain; 
         margin: 0 auto; display: block; border-radius: 16px;
+        border: none !important; box-shadow: none !important; background: transparent !important;
     }
     
     .carousel-btn {
