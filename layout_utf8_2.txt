@@ -1,0 +1,337 @@
+﻿
+>       <div class="premium-splits carousel-wrapper">
+          <div class="feature-split fade-up ">
+              <div class="split-text dynamic-caption">
+                  <h3 class="slide-title" 
+style="font-size: 24px; font-weight: 800; margin-bottom: 
+16px;">MoChat Main Dashboard</h3>
+                  <p class="slide-desc" style="font-size: 
+15px; color: #94A3B8; line-height: 1.7;">The "Home" of 
+the plugin. This centralized view displays your active 
+conversations, recent notifications, and quick-launch 
+icons for the entire suite of MoChat tools, keeping your 
+workflow organized.</p>
+              </div>
+              <div class="split-visual" 
+style="background: transparent; display: flex; 
+flex-direction: column; gap: 16px; border: none; 
+box-shadow: none;">
+                  <!-- Main Image Viewport -->
+                  <div class="carousel-container group" 
+style="background: transparent;">
+                      <div class="carousel-track">
+                          
+          <div class="carousel-slide active" 
+data-title="MoChat Main Dashboard" data-desc="The 
+&quot;Home&quot; of the plugin. This centralized view 
+displays your active conversations, recent notifications, 
+and quick-launch icons for the entire suite of MoChat 
+tools, keeping your workflow organized.">
+              <img 
+src="screenshots/Moachat_home_page.png" alt="MoChat Main 
+Dashboard" />
+          </div>
+      
+          <div class="carousel-slide " data-title="Secure 
+Group Chat" data-desc="Bring the whole team together in 
+one secure thread. Create dedicated chat rooms for 
+specific projects, allowing producers, designers, and 
+animators to share feedback, links, and assets in a 
+centralized, encrypted environment.">
+              <img src="screenshots/Group_Chat.png" 
+alt="Secure Group Chat" />
+          </div>
+      
+          <div class="carousel-slide " 
+data-title="End-To-End Encryption" data-desc="MoChat 
+prioritizes project security with industry-standard E2EE. 
+This ensures that your sensitive client discussions, 
+project files, and media links remain private and can 
+only be read by the intended recipients. Stay HIPAA and 
+GDPR compliant while collaborating on high-value motion 
+design projects.">
+              <img 
+src="screenshots/End_to_end_encryption.png" 
+alt="End-To-End Encryption" />
+>     <div class="premium-splits" style="margin-bottom: 
+120px;">
+        <div class="feature-center fade-up" 
+style="display: flex; flex-direction: column; 
+align-items: center; text-align: center; gap: 40px; 
+width: 100%;">
+            <div class="split-text" style="max-width: 
+800px; width: 100%;">
+                <span 
+class="split-eyebrow">Highlight</span>
+                <h2 class="split-title">MoPack: Video 
+Review Player</h2>
+                <p class="split-desc" style="max-width: 
+600px; margin: 0 auto;">The heart of MoChat's 
+collaboration suite. A frame-accurate video player that 
+allows you to draw annotations and leave timestamped 
+comments. Teammates can reply to specific frames, and 
+these comments can be synced back to your AE timeline as 
+markers.</p>
+            </div>
+            <div class="split-visual center-visual" 
+style="max-width: 1000px; width: 100%; background: 
+transparent; border-radius: 20px;">
+                <img src="screenshots/Mopack.png" 
+alt="MoPack: Video Review Player" style="max-width: 100%; 
+max-height: 600px; margin: 0 auto; display: block; 
+object-fit: contain; border-radius: 12px;" />
+            </div>
+        </div>
+      </div>
+    
+>     <div class="premium-splits" style="margin-bottom: 
+120px;">
+        <div class="feature-center fade-up" 
+style="display: flex; flex-direction: column; 
+align-items: center; text-align: center; gap: 40px; 
+width: 100%;">
+            <div class="split-text" style="max-width: 
+800px; width: 100%;">
+                <span 
+class="split-eyebrow">Highlight</span>
+                <h2 class="split-title">MoPrompt: AI 
+Director</h2>
+                <p class="split-desc" style="max-width: 
+600px; margin: 0 auto;">The revolutionary AI prompt 
+builder integrated with After Effects. It features a 3D 
+scene preview where you can move cameras and subjects to 
+visualize your shot before generating high-end AI images 
+or animations (Midjourney/DALL-E) to use in your 
+project.</p>
+            </div>
+            <div class="split-visual center-visual" 
+style="max-width: 1000px; width: 100%; background: 
+transparent; border-radius: 20px;">
+                <img src="screenshots/MoPrompt.png" 
+alt="MoPrompt: AI Director" style="max-width: 100%; 
+max-height: 600px; margin: 0 auto; display: block; 
+object-fit: contain; border-radius: 12px;" />
+            </div>
+        </div>
+      </div>
+          
+  </section>
+  
+  <!-- â”€â”€â”€ EVERYTHING YOUR TEAM NEEDS (Dark 
+Section) â”€â”€â”€ -->
+  <section id="tools" class="features-section" 
+style="background: linear-gradient(to bottom, #0E0F14, 
+#060608); padding-top: 100px;">
+      <div class="section-eyebrow">More Tools 
+Included</div>
+      <h2 class="section-title" style="margin-bottom: 
+80px;">Everything Your Team Needs</h2>
+      
+      
+>     <div class="premium-splits" style="margin-bottom: 
+120px;">
+        <div class="feature-center fade-up" 
+style="display: flex; flex-direction: column; 
+align-items: center; text-align: center; gap: 40px; 
+width: 100%;">
+            <div class="split-text" style="max-width: 
+800px; width: 100%;">
+                <span 
+class="split-eyebrow">Highlight</span>
+                <h2 class="split-title">MoFix: Project 
+Repair</h2>
+                <p class="split-desc" style="max-width: 
+600px; margin: 0 auto;">A dedicated utility for repairing 
+project-level issues. From relinking broken media paths 
+to cleaning up messy project structures, MoFix automates 
+the boring parts of project maintenance so you can focus 
+on being creative.</p>
+            </div>
+            <div class="split-visual center-visual" 
+style="max-width: 1000px; width: 100%; background: 
+transparent; border-radius: 20px;">
+                <img src="screenshots/Mofix.png" 
+alt="MoFix: Project Repair" style="max-width: 100%; 
+max-height: 600px; margin: 0 auto; display: block; 
+object-fit: contain; border-radius: 12px;" />
+            </div>
+        </div>
+      </div>
+      
+>     <div class="premium-splits" style="margin-bottom: 
+120px;">
+          
+      <div class="feature-split fade-up">
+          <div class="split-text">
+              <h2 class="split-title">Google Explore 
+Palette</h2>
+              <p class="split-desc">Never run out of 
+inspiration. This feature integrates a vast library of 
+trending color palettes from the Google Material Design 
+ecosystem. Browse, filter, and instantly apply 
+professional color schemes to your After Effects 
+compositions with a single click.</p>
+          </div>
+          <div class="split-visual side-visual">
+              <img src="screenshots/Google_Explore 
+Palette.png" alt="Google Explore Palette" />
+          </div>
+      </div>   <!-- 1st: left text, right img -->
+          
+      <div class="feature-split fade-up">
+          <div class="split-text">
+              <h2 class="split-title">Global Find & 
+Replace</h2>
+              <p class="split-desc">Modify text across 
+your entire project in seconds. Search through all 
+compositions for specific words or phrases and replace 
+them globally. It supports case sensitivity and provides 
+a preview before applying changes.</p>
+          </div>
+          <div class="split-visual side-visual">
+              <img src="screenshots/MoF&R.png" 
+alt="Global Find & Replace" />
+          </div>
+      </div>                    <!-- 2nd: right text, 
+left img (due to nth-child) -->
+>       <div class="premium-splits carousel-wrapper">
+          <div class="feature-split fade-up ">
+              <div class="split-text dynamic-caption">
+                  <h3 class="slide-title" 
+style="font-size: 24px; font-weight: 800; margin-bottom: 
+16px;">Smart Palette Generator</h3>
+                  <p class="slide-desc" style="font-size: 
+15px; color: #94A3B8; line-height: 1.7;">Harness the 
+power of the Google palette engine to generate harmonic 
+color schemes on the fly. Whether you need a 
+monochromatic look or a vibrant triadic scheme, this tool 
+provides logical color transitions that elevate the 
+professional quality of your designs.</p>
+              </div>
+              <div class="split-visual" 
+style="background: transparent; display: flex; 
+flex-direction: column; gap: 16px; border: none; 
+box-shadow: none;">
+                  <!-- Main Image Viewport -->
+                  <div class="carousel-container group" 
+style="background: transparent;">
+                      <div class="carousel-track">
+                          
+          <div class="carousel-slide active" 
+data-title="Smart Palette Generator" data-desc="Harness 
+the power of the Google palette engine to generate 
+harmonic color schemes on the fly. Whether you need a 
+monochromatic look or a vibrant triadic scheme, this tool 
+provides logical color transitions that elevate the 
+professional quality of your designs.">
+              <img src="screenshots/Google_Generate.png" 
+alt="Smart Palette Generator" />
+          </div>
+      
+          <div class="carousel-slide " data-title="Global 
+Design Library" data-desc="A centralized place to 
+organize all your favorite design assets. Save specific 
+fonts, color palettes, and icons into your &quot;My 
+Library&quot; to reuse them across different projects, 
+ensuring consistent branding for recurring clients.">
+              <img src="screenshots/Google_My 
+Librarry.png" alt="Global Design Library" />
+          </div>
+      
+          <div class="carousel-slide " 
+data-title="Gradlette Color Suite" data-desc="The 
+&quot;Gradlette&quot; main interface is your hub for 
+color management. It features a spacebar-driven random 
+generator that follows color theory rules, allowing you 
+to discover unique color combinations in seconds.">
+              <img src="screenshots/Gradlette.png" 
+alt="Gradlette Color Suite" />
+>       <div class="premium-splits carousel-wrapper">
+          <div class="feature-split fade-up 
+force-reverse">
+              <div class="split-text dynamic-caption">
+                  <h3 class="slide-title" 
+style="font-size: 24px; font-weight: 800; margin-bottom: 
+16px;">TemGrid: Rule of Thirds</h3>
+                  <p class="slide-desc" style="font-size: 
+15px; color: #94A3B8; line-height: 1.7;">The standard for 
+photographic and cinematic composition. This 3x3 grid 
+helps you place points of interest on the intersections 
+for a more dynamic and balanced frame than simple 
+centering.</p>
+              </div>
+              <div class="split-visual" 
+style="background: transparent; display: flex; 
+flex-direction: column; gap: 16px; border: none; 
+box-shadow: none;">
+                  <!-- Main Image Viewport -->
+                  <div class="carousel-container group" 
+style="background: transparent;">
+                      <div class="carousel-track">
+                          
+          <div class="carousel-slide active" 
+data-title="TemGrid: Rule of Thirds" data-desc="The 
+standard for photographic and cinematic composition. This 
+3x3 grid helps you place points of interest on the 
+intersections for a more dynamic and balanced frame than 
+simple centering.">
+              <img 
+src="screenshots/TemGrid_Rule_of_Thirds.png" 
+alt="TemGrid: Rule of Thirds" />
+          </div>
+      
+          <div class="carousel-slide " 
+data-title="TemGrid: Column Grid" data-desc="Standard 
+12-column (or custom) layout guides. Use these to 
+structure complex informational layouts, dashboards, and 
+web-stye designs with consistent margins and gutters.">
+              <img 
+src="screenshots/TemGrid_Column_Grid.png" alt="TemGrid: 
+Column Grid" />
+          </div>
+      
+          <div class="carousel-slide " 
+data-title="TemGrid: Modular Grid" data-desc="Beyond 
+simple columns, the modular grid creates a matrix of 
+&quot;zones.&quot; This is perfect for complex screen 
+designs where you need to balance text, data, and imagery 
+in a tight, organized space.">
+              <img 
+src="screenshots/TemGrid_Modular_Grid.png" alt="TemGrid: 
+Modular Grid" />
+>     <div class="premium-splits" style="margin-bottom: 
+120px;">
+          
+      <div class="feature-split fade-up">
+          <div class="split-text">
+              <h2 class="split-title">MoZoom: Precision 
+Navigation</h2>
+              <p class="split-desc">standard zoom presets 
+can be limiting. MoZoom provides a smooth slider that 
+allows you to zoom your AE viewer from 1% to 800% with 
+precision, making it easier to work on fine details or 
+view the entire canvas.</p>
+          </div>
+          <div class="split-visual side-visual">
+              <img src="screenshots/Mozoom.png" 
+alt="MoZoom: Precision Navigation" />
+          </div>
+      </div>                   <!-- left text -->
+          
+      <div class="feature-split fade-up">
+          <div class="split-text">
+              <h2 class="split-title">Moji: Contextual 
+Emoji Search</h2>
+              <p class="split-desc">Modern communication 
+and design often require emojis. Moji provides a fast, 
+searchable interface for thousands of emojis, allowing 
+you to insert them into your chat messages or directly 
+into After Effects text layers.</p>
+          </div>
+          <div class="split-visual side-visual">
+              <img src="screenshots/Moji.png" alt="Moji: 
+Contextual Emoji Search" />
+          </div>
+      </div>                     <!-- right text -->
+
+

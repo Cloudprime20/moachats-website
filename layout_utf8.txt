@@ -1,0 +1,96 @@
+﻿
+>     <h2 class="section-title" style="margin-bottom: 
+80px;">Everything Your Team Needs</h2>
+      
+      
+      <div class="premium-splits" style="margin-bottom: 
+120px;">
+        <div class="feature-center fade-up" 
+style="display: flex; flex-direction: column; 
+align-items: center; text-align: center; gap: 40px; 
+width: 100%;">
+            <div class="split-text" style="max-width: 
+800px; width: 100%;">
+                <span 
+class="split-eyebrow">Highlight</span>
+                <h2 class="split-title">MoFix: Project 
+Repair</h2>
+                <p class="split-desc" style="max-width: 
+600px; margin: 0 auto;">A dedicated utility for repairing 
+project-level issues. From relinking broken media paths 
+to cleaning up messy project structures, MoFix automates 
+the boring parts of project maintenance so you can focus 
+on being creative.</p>
+            </div>
+            <div class="split-visual center-visual" 
+style="max-width: 1000px; width: 100%; background: 
+transparent; border-radius: 20px;">
+                <img src="screenshots/Mofix.png" 
+alt="MoFix: Project Repair" style="max-width: 100%; 
+max-height: 600px; margin: 0 auto; display: block; 
+object-fit: contain; border-radius: 12px;" />
+            </div>
+        </div>
+      </div>
+      
+      <div class="premium-splits" style="margin-bottom: 
+120px;">
+          
+      <div class="feature-split fade-up">
+          <div class="split-text">
+              <h2 class="split-title">Google Explore 
+Palette</h2>
+              <p class="split-desc">Never run out of 
+inspiration. This feature integrates a vast library of 
+trending color palettes from the Google Material Design 
+ecosystem. Browse, filter, and instantly apply 
+professional color schemes to your After Effects 
+compositions with a single click.</p>
+          </div>
+          <div class="split-visual side-visual">
+              <img src="screenshots/Google_Explore 
+Palette.png" alt="Google Explore Palette" />
+          </div>
+      </div>   <!-- 1st: left text, right img -->
+          
+      <div class="feature-split fade-up">
+          <div class="split-text">
+              <h2 class="split-title">Global Find & 
+Replace</h2>
+              <p class="split-desc">Modify text across 
+your entire project in seconds. Search through all 
+compositions for specific words or phrases and replace 
+them globally. It supports case sensitivity and provides 
+a preview before applying changes.</p>
+          </div>
+          <div class="split-visual side-visual">
+              <img src="screenshots/MoF&R.png" 
+alt="Global Find & Replace" />
+          </div>
+      </div>                    <!-- 2nd: right text, 
+left img (due to nth-child) -->
+          
+      <div class="feature-split fade-up">
+          <div class="split-text">
+              <h2 class="split-title">Google Fonts 
+Integration</h2>
+              <p class="split-desc">Stop wasting time 
+searching for fonts in a browser. MoChat brings the 
+entire Google Fonts library directly into After Effects. 
+Preview thousands of typefaces with custom text, download 
+them instantly, and apply them to your text layers 
+without ever leaving your workspace.</p>
+          </div>
+          <div class="split-visual side-visual">
+              <img src="screenshots/Google_Font.png" 
+alt="Google Fonts Integration" />
+          </div>
+      </div>              <!-- 3rd: left text, right img 
+-->
+          
+      <div class="feature-split fade-up">
+          <div class="split-text">
+              <h2 class="split-title">Google Icons 
+Library</h2>
+
+
