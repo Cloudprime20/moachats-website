@@ -64,7 +64,7 @@ function buildCenterFeature(imgName) {
               <h2 class="split-title">${item.title}</h2>
               <p class="split-desc" style="max-width: 600px; margin: 0 auto;">${item.desc}</p>
           </div>
-          <div class="split-visual center-visual" style="max-width: 1000px; width: 100%; background: #141620; padding: 20px; border-radius: 20px;">
+          <div class="split-visual center-visual" style="max-width: 1000px; width: 100%; background: transparent; border-radius: 20px;">
               <img src="screenshots/${item.image}" alt="${item.title}" style="max-width: 100%; max-height: 600px; margin: 0 auto; display: block; object-fit: contain; border-radius: 12px;" />
           </div>
       </div>
@@ -211,7 +211,7 @@ const modifiedHtml = indexHtmlContent.substring(0, topIndex) + newHtmlContent + 
 const styles = `
     .carousel-container {
         position: relative; overflow: hidden; height: 500px;
-        background: #141620; padding: 20px;
+        background: transparent;
     }
     .carousel-track {
         display: flex; height: 100%; width: 100%; position: relative; overflow: hidden;
@@ -257,7 +257,7 @@ const styles = `
     .carousel-dot.active { background: #1DA1FF; box-shadow: 0 0 10px #1DA1FF; }
 
     /* Side features image handling */
-    .side-visual { background: #141620; padding: 20px; display: flex; align-items: center; justify-content: center; }
+    .side-visual { background: transparent; display: flex; align-items: center; justify-content: center; }
     .side-visual img { max-width: 100%; max-height: 400px; object-fit: contain; border-radius: 12px; }
 
     @media (min-width: 900px) {
