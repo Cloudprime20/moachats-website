@@ -392,14 +392,21 @@ const jsCode = `
 
 let cleanedHtml = modifiedHtml;
 
+let hasBody = cleanedHtml.includes('</body>');
 if(cleanedHtml.includes('<!-- CAROUSEL SCRIPT -->')) {
     cleanedHtml = cleanedHtml.substring(0, cleanedHtml.indexOf('<!-- CAROUSEL SCRIPT -->'));
+    hasBody = false;
 }
 if(cleanedHtml.includes('</style>')) {
     const lastStyleIndex = cleanedHtml.lastIndexOf('</style>');
     cleanedHtml = cleanedHtml.substring(0, lastStyleIndex) + styles + '</style>' + cleanedHtml.substring(lastStyleIndex + 8);
 }
 
-const finalHtml = cleanedHtml.replace('</body>', '<!-- CAROUSEL SCRIPT -->\n' + jsCode + '\n</body>');
+let finalHtml = cleanedHtml;
+if (hasBody) {
+    finalHtml = finalHtml.replace('</body>', '<!-- CAROUSEL SCRIPT -->\n' + jsCode + '\n</body>');
+} else {
+    finalHtml = finalHtml + '\n<!-- CAROUSEL SCRIPT -->\n' + jsCode + '\n</body>\n</html>';
+}
 fs.writeFileSync(indexHtmlPath, finalHtml);
 console.log("Successfully rebuilt index.html");

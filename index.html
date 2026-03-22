@@ -1445,6 +1445,86 @@
         transform-style: preserve-3d;
         will-change: transform;
     }
+
+    .carousel-container {
+        position: relative; overflow: hidden; height: 500px; width: 100%;
+        background: transparent;
+    }
+    .carousel-track {
+        display: flex; height: 100%; width: 100%; position: relative; overflow: hidden;
+    }
+    .carousel-slide {
+        position: absolute; inset: 0;
+        opacity: 0; transition: opacity 0.7s ease-in-out;
+        pointer-events: none; z-index: 0;
+    }
+    .carousel-slide.active { opacity: 1; pointer-events: auto; z-index: 10; }
+    .carousel-slide img { 
+        width: 100%; height: 100%; object-fit: contain; 
+        margin: 0 auto; display: block; border-radius: 12px;
+    }
+    
+    .carousel-btn {
+        position: absolute; top: 50%; transform: translateY(-50%);
+        width: 40px; height: 40px; border-radius: 50%;
+        background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1);
+        color: white; cursor: pointer; z-index: 20;
+        display: flex; align-items: center; justify-content: center;
+        transition: all 0.3s; opacity: 0; backdrop-filter: blur(8px);
+    }
+    .group:hover .carousel-btn { opacity: 1; }
+    .carousel-btn:hover { background: rgba(0,0,0,0.7); transform: translateY(-50%) scale(1.1); box-shadow: 0 0 0 2px rgba(255,255,255,0.3); }
+    .carousel-prev { left: 16px; }
+    .carousel-next { right: 16px; }
+
+    .carousel-thumbs {
+        display: flex; justify-content: center; gap: 12px;
+        width: 100%; overflow-x: auto; padding-bottom: 8px;
+    }
+    .carousel-thumb {
+        position: relative; flex-shrink: 0;
+        width: 60px; height: 80px; border-radius: 8px;
+        overflow: hidden; cursor: pointer;
+        border: none; outline: none; background: transparent;
+        transition: all 0.3s; opacity: 0.5;
+        box-shadow: 0 0 0 1px rgba(255,255,255,0.1);
+        transform: scale(0.95);
+    }
+    @media (min-width: 640px) {
+        .carousel-thumb { width: 70px; height: 95px; }
+    }
+    .carousel-thumb:hover { opacity: 1; transform: scale(1); }
+    .carousel-thumb.active {
+        opacity: 1; transform: scale(1);
+        box-shadow: 0 0 0 2px white;
+    }
+    .carousel-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .carousel-thumb.active::after {
+        content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.1);
+    }
+
+    /* Side features image handling */
+    .side-visual { background: transparent; display: flex; align-items: center; justify-content: center; }
+    .side-visual img { max-width: 100%; max-height: 400px; object-fit: contain; border-radius: 12px; }
+
+    @media (min-width: 900px) {
+        .feature-split.force-reverse { flex-direction: row-reverse !important; }
+    }
+
+    /* Hero Floating & Parallax Effects */
+    @keyframes floaty1 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-15px) rotate(1deg); } }
+    @keyframes floaty2 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-10px) rotate(-1deg); } }
+    @keyframes floaty3 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-20px) rotate(2deg); } }
+
+    .float-1 { animation: floaty1 6s ease-in-out infinite; }
+    .float-2 { animation: floaty2 5.5s ease-in-out infinite 0.5s; }
+    .float-3 { animation: floaty3 7s ease-in-out infinite 1s; }
+
+    .hero-layer {
+        transition: transform 0.15s ease-out;
+        transform-style: preserve-3d;
+        will-change: transform;
+    }
 </style>
 </head>
 
@@ -1471,6 +1551,7 @@
   </nav>
 
   
+
 
 
 
@@ -1995,3 +2076,96 @@
         });
     });
   </script>
+
+<!-- CAROUSEL SCRIPT -->
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.carousel-container').forEach(container => {
+            const visualContainer = container.closest('.split-visual');
+            const slides = container.querySelectorAll('.carousel-slide');
+            const thumbs = visualContainer.querySelectorAll('.carousel-thumb');
+            const prev = container.querySelector('.carousel-prev');
+            const next = container.querySelector('.carousel-next');
+            let currentIndex = 0;
+            let timeoutId;
+            let isHovered = false;
+
+            function startAutoplay() {
+                clearTimeout(timeoutId);
+                if (!isHovered) {
+                    timeoutId = setTimeout(() => goToSlide(currentIndex + 1), 4000);
+                }
+            }
+
+            visualContainer.addEventListener('mouseenter', () => { isHovered = true; clearTimeout(timeoutId); });
+            visualContainer.addEventListener('mouseleave', () => { isHovered = false; startAutoplay(); });
+
+            function goToSlide(index) {
+                if(index < 0) index = slides.length - 1;
+                if(index >= slides.length) index = 0;
+                currentIndex = index;
+                
+                slides.forEach((s, i) => {
+                    const isActive = i === currentIndex;
+                    s.classList.toggle('active', isActive);
+                    if (isActive) {
+                        const title = s.getAttribute('data-title');
+                        const desc = s.getAttribute('data-desc');
+                        const wrapper = container.closest('.carousel-wrapper');
+                        if (wrapper) {
+                            const titleEl = wrapper.querySelector('.slide-title');
+                            const descEl = wrapper.querySelector('.slide-desc');
+                            if (titleEl) titleEl.innerText = title;
+                            if (descEl) descEl.innerText = desc;
+                        }
+                    }
+                });
+                
+                thumbs.forEach((t, i) => t.classList.toggle('active', i === currentIndex));
+                startAutoplay();
+            }
+
+            if(prev) prev.addEventListener('click', () => goToSlide(currentIndex - 1));
+            if(next) next.addEventListener('click', () => goToSlide(currentIndex + 1));
+            thumbs.forEach((t, i) => t.addEventListener('click', () => goToSlide(i)));
+            
+            startAutoplay();
+        });
+
+        // Hero Mouse Parallax
+        const heroVisual = document.querySelector('.hero-visual');
+        const layers = document.querySelectorAll('.hero-layer');
+        if (heroVisual) {
+            heroVisual.addEventListener('mousemove', (e) => {
+                const rect = heroVisual.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const deltaX = (x - centerX) / centerX;
+                const deltaY = (y - centerY) / centerY;
+                
+                layers.forEach((layer, index) => {
+                    const depth = (index + 1) * 8; 
+                    const rotateX = -deltaY * depth * 0.4;
+                    const rotateY = deltaX * depth * 0.4;
+                    const translateX = -deltaX * depth * 1.5;
+                    const translateY = -deltaY * depth * 1.5;
+                    
+                    layer.style.transform = `translate(${translateX}px, ${translateY}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                });
+            });
+
+            heroVisual.addEventListener('mouseleave', () => {
+                layers.forEach(layer => {
+                    layer.style.transform = 'translate(0px, 0px) rotateX(0deg) rotateY(0deg)';
+                });
+            });
+        }
+    });
+  </script>
+
+</body>
+</html>
