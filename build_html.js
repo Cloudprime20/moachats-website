@@ -125,10 +125,16 @@ let newHtmlContent = `
             </div>
         </div>
         <!-- Right Visual (3 Layered Images) -->
-        <div class="hero-visual" style="flex: 1.2; min-width: 300px; position: relative; min-height: 480px; display: flex; align-items: center; justify-content: center;">
-            <img src="screenshots/Moachat_home_page.png" alt="Home" style="position: absolute; right: 0; top: 0%; width: 55%; max-width: 350px; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); z-index: 1;" />
-            <img src="screenshots/Mohub.png" alt="Hub" style="position: absolute; left: 20%; top: 30%; width: 45%; max-width: 280px; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); z-index: 2;" />
-            <img src="screenshots/Share_Action.png" alt="Share" style="position: absolute; left: 10%; bottom: 5%; width: 30%; max-width: 200px; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); z-index: 3;" />
+        <div class="hero-visual" style="flex: 1.2; min-width: 300px; position: relative; min-height: 480px; display: flex; align-items: center; justify-content: center; margin-top: -80px; perspective: 1000px;">
+            <div class="float-wrap float-1" style="position: absolute; right: 0; top: 0%; width: 55%; max-width: 350px; z-index: 1;">
+                <img class="hero-layer layer-1" src="screenshots/Moachat_home_page.png" alt="Home" style="width: 100%; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); pointer-events: none;" />
+            </div>
+            <div class="float-wrap float-2" style="position: absolute; left: 20%; top: 30%; width: 45%; max-width: 280px; z-index: 2;">
+                <img class="hero-layer layer-2" src="screenshots/Mohub.png" alt="Hub" style="width: 100%; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); pointer-events: none;" />
+            </div>
+            <div class="float-wrap float-3" style="position: absolute; left: 10%; bottom: 5%; width: 30%; max-width: 200px; z-index: 3;">
+                <img class="hero-layer layer-3" src="screenshots/Share_Action.png" alt="Share" style="width: 100%; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); pointer-events: none;" />
+            </div>
         </div>
     </div>
 </section>
@@ -257,6 +263,21 @@ const styles = `
     @media (min-width: 900px) {
         .feature-split.force-reverse { flex-direction: row-reverse !important; }
     }
+
+    /* Hero Floating & Parallax Effects */
+    @keyframes floaty1 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-15px) rotate(1deg); } }
+    @keyframes floaty2 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-10px) rotate(-1deg); } }
+    @keyframes floaty3 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-20px) rotate(2deg); } }
+
+    .float-1 { animation: floaty1 6s ease-in-out infinite; }
+    .float-2 { animation: floaty2 5.5s ease-in-out infinite 0.5s; }
+    .float-3 { animation: floaty3 7s ease-in-out infinite 1s; }
+
+    .hero-layer {
+        transition: transform 0.15s ease-out;
+        transform-style: preserve-3d;
+        will-change: transform;
+    }
 `;
 
 const jsCode = `
@@ -281,6 +302,38 @@ const jsCode = `
             if(next) next.addEventListener('click', () => goToSlide(currentIndex + 1));
             dots.forEach((dot, i) => dot.addEventListener('click', () => goToSlide(i)));
         });
+
+        // Hero Mouse Parallax
+        const heroVisual = document.querySelector('.hero-visual');
+        const layers = document.querySelectorAll('.hero-layer');
+        if (heroVisual) {
+            heroVisual.addEventListener('mousemove', (e) => {
+                const rect = heroVisual.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const deltaX = (x - centerX) / centerX;
+                const deltaY = (y - centerY) / centerY;
+                
+                layers.forEach((layer, index) => {
+                    const depth = (index + 1) * 8; 
+                    const rotateX = -deltaY * depth * 0.4;
+                    const rotateY = deltaX * depth * 0.4;
+                    const translateX = -deltaX * depth * 1.5;
+                    const translateY = -deltaY * depth * 1.5;
+                    
+                    layer.style.transform = \`translate(\${translateX}px, \${translateY}px) rotateX(\${rotateX}deg) rotateY(\${rotateY}deg)\`;
+                });
+            });
+
+            heroVisual.addEventListener('mouseleave', () => {
+                layers.forEach(layer => {
+                    layer.style.transform = 'translate(0px, 0px) rotateX(0deg) rotateY(0deg)';
+                });
+            });
+        }
     });
   </script>
 `;
