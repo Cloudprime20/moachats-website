@@ -126,9 +126,9 @@ let newHtmlContent = `
         </div>
         <!-- Right Visual (3 Layered Images) -->
         <div class="hero-visual" style="flex: 1.2; min-width: 300px; position: relative; min-height: 480px; display: flex; align-items: center; justify-content: center;">
-            <img src="screenshots/Moachat_home_page.png" alt="Home" style="position: absolute; right: 0; top: 5%; width: 70%; max-width: 450px; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); z-index: 1;" />
-            <img src="screenshots/Mohub.png" alt="Hub" style="position: absolute; left: 10%; top: 35%; width: 55%; max-width: 350px; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); z-index: 2;" />
-            <img src="screenshots/Share_Action.png" alt="Share" style="position: absolute; left: 0%; bottom: 5%; max-width: 250px; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); z-index: 3;" />
+            <img src="screenshots/Moachat_home_page.png" alt="Home" style="position: absolute; right: 0; top: 0%; width: 55%; max-width: 350px; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); z-index: 1;" />
+            <img src="screenshots/Mohub.png" alt="Hub" style="position: absolute; left: 20%; top: 30%; width: 45%; max-width: 280px; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); z-index: 2;" />
+            <img src="screenshots/Share_Action.png" alt="Share" style="position: absolute; left: 10%; bottom: 5%; width: 30%; max-width: 200px; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); z-index: 3;" />
         </div>
     </div>
 </section>
