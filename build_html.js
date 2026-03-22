@@ -19,35 +19,37 @@ function buildCarousel(title, subtitle, imageList, reverse=false) {
     if (!items.length) return '';
 
     let slidesHtml = items.map((item, i) => `
-        <div class="carousel-slide ${i === 0 ? 'active' : ''}">
+        <div class="carousel-slide ${i === 0 ? 'active' : ''}" data-title="${item.title.replace(/"/g, '&quot;')}" data-desc="${item.desc.replace(/"/g, '&quot;')}">
             <img src="screenshots/${item.image}" alt="${item.title}" />
-            <div class="carousel-caption">
-                <h3>${item.title}</h3>
-                <p>${item.desc}</p>
-            </div>
         </div>
     `).join('');
 
     let dotsHtml = items.map((_, i) => `<div class="carousel-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></div>`).join('');
 
     return `
-    <div class="premium-splits" style="margin-bottom: 120px;">
-      <div class="feature-split fade-up ${reverse ? 'force-reverse' : ''}">
-          <div class="split-text">
-              <span class="split-eyebrow">Features Collection</span>
-              <h2 class="split-title">${title}</h2>
-              <p class="split-desc">${subtitle}</p>
-          </div>
-          <div class="split-visual carousel-container">
-              <div class="carousel-track">
-                  ${slidesHtml}
-              </div>
-              <button class="carousel-btn carousel-prev">&larr;</button>
-              <button class="carousel-btn carousel-next">&rarr;</button>
-              <div class="carousel-nav">
-                  ${dotsHtml}
-              </div>
-          </div>
+    <div style="margin-bottom: 120px;">
+      <div class="fade-up" style="text-align: center; max-width: 800px; margin: 0 auto 60px; padding: 0 24px;">
+          <span class="split-eyebrow">Features Collection</span>
+          <h2 class="split-title">${title}</h2>
+          <p class="split-desc" style="margin: 0 auto;">${subtitle}</p>
+      </div>
+      <div class="premium-splits carousel-wrapper">
+        <div class="feature-split fade-up ${reverse ? 'force-reverse' : ''}">
+            <div class="split-text dynamic-caption">
+                <h3 class="slide-title" style="font-size: 24px; font-weight: 800; margin-bottom: 16px;">${items[0].title}</h3>
+                <p class="slide-desc" style="font-size: 15px; color: #94A3B8; line-height: 1.7;">${items[0].desc}</p>
+            </div>
+            <div class="split-visual carousel-container">
+                <div class="carousel-track">
+                    ${slidesHtml}
+                </div>
+                <button class="carousel-btn carousel-prev">&larr;</button>
+                <button class="carousel-btn carousel-next">&rarr;</button>
+                <div class="carousel-nav">
+                    ${dotsHtml}
+                </div>
+            </div>
+        </div>
       </div>
     </div>`;
 }
@@ -226,13 +228,7 @@ const styles = `
         width: 100%; height: 100%; object-fit: contain; 
         max-height: 500px; margin: 0 auto; display: block; border-radius: 12px;
     }
-    .carousel-caption {
-        position: absolute; bottom: 0; left: 0; right: 0;
-        background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
-        padding: 40px 24px 24px; border-radius: 0 0 20px 20px;
-    }
-    .carousel-caption h3 { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
-    .carousel-caption p { font-size: 13px; color: #94A3B8; line-height: 1.6; margin: 0; }
+    /* Removed inline carousel caption since it was moved outside */
     
     .carousel-btn {
         position: absolute; top: 50%; transform: translateY(-50%);
@@ -294,7 +290,21 @@ const jsCode = `
                 if(index < 0) index = slides.length - 1;
                 if(index >= slides.length) index = 0;
                 currentIndex = index;
-                slides.forEach((s, i) => s.classList.toggle('active', i === currentIndex));
+                slides.forEach((s, i) => {
+                    const isActive = i === currentIndex;
+                    s.classList.toggle('active', isActive);
+                    if (isActive) {
+                        const title = s.getAttribute('data-title');
+                        const desc = s.getAttribute('data-desc');
+                        const wrapper = container.closest('.carousel-wrapper');
+                        if (wrapper) {
+                            const titleEl = wrapper.querySelector('.slide-title');
+                            const descEl = wrapper.querySelector('.slide-desc');
+                            if (titleEl) titleEl.innerText = title;
+                            if (descEl) descEl.innerText = desc;
+                        }
+                    }
+                });
                 dots.forEach((d, i) => d.classList.toggle('active', i === currentIndex));
             }
 

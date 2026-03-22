@@ -1217,6 +1217,70 @@
         transform-style: preserve-3d;
         will-change: transform;
     }
+
+    .carousel-container {
+        position: relative; overflow: hidden; height: 500px;
+        background: transparent;
+    }
+    .carousel-track {
+        display: flex; height: 100%; width: 100%; position: relative; overflow: hidden;
+    }
+    .carousel-slide {
+        position: absolute; inset: 0;
+        opacity: 0; transition: opacity 0.5s ease;
+        pointer-events: none;
+    }
+    .carousel-slide.active { opacity: 1; pointer-events: auto; }
+    .carousel-slide img { 
+        width: 100%; height: 100%; object-fit: contain; 
+        max-height: 500px; margin: 0 auto; display: block; border-radius: 12px;
+    }
+    /* Removed inline carousel caption since it was moved outside */
+    
+    .carousel-btn {
+        position: absolute; top: 50%; transform: translateY(-50%);
+        width: 36px; height: 36px; border-radius: 50%;
+        background: rgba(29,161,255,0.2); border: 1px solid rgba(29,161,255,0.4);
+        color: white; cursor: pointer; z-index: 10;
+        display: flex; align-items: center; justify-content: center;
+        transition: all 0.2s;
+    }
+    .carousel-btn:hover { background: rgba(29,161,255,0.8); }
+    .carousel-prev { left: 16px; }
+    .carousel-next { right: 16px; }
+
+    .carousel-nav {
+        position: absolute; bottom: 16px; right: 16px;
+        display: flex; gap: 8px; z-index: 10;
+    }
+    .carousel-dot {
+        width: 8px; height: 8px; border-radius: 50%;
+        background: rgba(255,255,255,0.3); cursor: pointer; transition: background 0.3s;
+    }
+    .carousel-dot.active { background: #1DA1FF; box-shadow: 0 0 10px #1DA1FF; }
+
+    /* Side features image handling */
+    .side-visual { background: transparent; display: flex; align-items: center; justify-content: center; }
+    .side-visual img { max-width: 100%; max-height: 400px; object-fit: contain; border-radius: 12px; }
+
+    @media (min-width: 900px) {
+        .feature-split.force-reverse { flex-direction: row-reverse !important; }
+    }
+
+    /* Hero Floating & Parallax Effects */
+    @keyframes floaty1 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-15px) rotate(1deg); } }
+    @keyframes floaty2 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-10px) rotate(-1deg); } }
+    @keyframes floaty3 { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-20px) rotate(2deg); } }
+
+    .float-1 { animation: floaty1 6s ease-in-out infinite; }
+    .float-2 { animation: floaty2 5.5s ease-in-out infinite 0.5s; }
+    .float-3 { animation: floaty3 7s ease-in-out infinite 1s; }
+
+    .hero-layer {
+        transition: transform 0.15s ease-out;
+        transform-style: preserve-3d;
+        will-change: transform;
+    }
 </style>
 </head>
 
@@ -1243,6 +1307,7 @@
   </nav>
 
   
+
 
 
 
@@ -1304,71 +1369,53 @@
 <section id="features" class="features-section" style="padding-top: 40px;">
     
   
-    <div class="premium-splits" style="margin-bottom: 120px;">
-      <div class="feature-split fade-up ">
-          <div class="split-text">
-              <span class="split-eyebrow">Features Collection</span>
-              <h2 class="split-title">Chat Feature</h2>
-              <p class="split-desc">Connect instantly with your team. Encrypted, fast, and fully integrated with your projects.</p>
-          </div>
-          <div class="split-visual carousel-container">
-              <div class="carousel-track">
-                  
-        <div class="carousel-slide active">
+    <div style="margin-bottom: 120px;">
+      <div class="fade-up" style="text-align: center; max-width: 800px; margin: 0 auto 60px; padding: 0 24px;">
+          <span class="split-eyebrow">Features Collection</span>
+          <h2 class="split-title">Chat Feature</h2>
+          <p class="split-desc" style="margin: 0 auto;">Connect instantly with your team. Encrypted, fast, and fully integrated with your projects.</p>
+      </div>
+      <div class="premium-splits carousel-wrapper">
+        <div class="feature-split fade-up ">
+            <div class="split-text dynamic-caption">
+                <h3 class="slide-title" style="font-size: 24px; font-weight: 800; margin-bottom: 16px;">MoChat Main Dashboard</h3>
+                <p class="slide-desc" style="font-size: 15px; color: #94A3B8; line-height: 1.7;">The "Home" of the plugin. This centralized view displays your active conversations, recent notifications, and quick-launch icons for the entire suite of MoChat tools, keeping your workflow organized.</p>
+            </div>
+            <div class="split-visual carousel-container">
+                <div class="carousel-track">
+                    
+        <div class="carousel-slide active" data-title="MoChat Main Dashboard" data-desc="The &quot;Home&quot; of the plugin. This centralized view displays your active conversations, recent notifications, and quick-launch icons for the entire suite of MoChat tools, keeping your workflow organized.">
             <img src="screenshots/Moachat_home_page.png" alt="MoChat Main Dashboard" />
-            <div class="carousel-caption">
-                <h3>MoChat Main Dashboard</h3>
-                <p>The "Home" of the plugin. This centralized view displays your active conversations, recent notifications, and quick-launch icons for the entire suite of MoChat tools, keeping your workflow organized.</p>
-            </div>
         </div>
     
-        <div class="carousel-slide ">
+        <div class="carousel-slide " data-title="Secure Group Chat" data-desc="Bring the whole team together in one secure thread. Create dedicated chat rooms for specific projects, allowing producers, designers, and animators to share feedback, links, and assets in a centralized, encrypted environment.">
             <img src="screenshots/Group_Chat.png" alt="Secure Group Chat" />
-            <div class="carousel-caption">
-                <h3>Secure Group Chat</h3>
-                <p>Bring the whole team together in one secure thread. Create dedicated chat rooms for specific projects, allowing producers, designers, and animators to share feedback, links, and assets in a centralized, encrypted environment.</p>
-            </div>
         </div>
     
-        <div class="carousel-slide ">
+        <div class="carousel-slide " data-title="End-To-End Encryption" data-desc="MoChat prioritizes project security with industry-standard E2EE. This ensures that your sensitive client discussions, project files, and media links remain private and can only be read by the intended recipients. Stay HIPAA and GDPR compliant while collaborating on high-value motion design projects.">
             <img src="screenshots/End_to_end_encryption.png" alt="End-To-End Encryption" />
-            <div class="carousel-caption">
-                <h3>End-To-End Encryption</h3>
-                <p>MoChat prioritizes project security with industry-standard E2EE. This ensures that your sensitive client discussions, project files, and media links remain private and can only be read by the intended recipients. Stay HIPAA and GDPR compliant while collaborating on high-value motion design projects.</p>
-            </div>
         </div>
     
-        <div class="carousel-slide ">
+        <div class="carousel-slide " data-title="Shared Actions Hub" data-desc="A dedicated menu for sharing project data. Whether you need to export a specific frame for review, share a color palette with a teammate, or send a project-sync request, all sharing actions are consolidated here for speed.">
             <img src="screenshots/Share_Action.png" alt="Shared Actions Hub" />
-            <div class="carousel-caption">
-                <h3>Shared Actions Hub</h3>
-                <p>A dedicated menu for sharing project data. Whether you need to export a specific frame for review, share a color palette with a teammate, or send a project-sync request, all sharing actions are consolidated here for speed.</p>
-            </div>
         </div>
     
-        <div class="carousel-slide ">
+        <div class="carousel-slide " data-title="Smart Attachment System" data-desc="Collaboration often involves sharing files. This system intelligently recognizes After Effects project files, presets, and common media formats, ensuring they are shared securely and can be downloaded/opened directly by other team members.">
             <img src="screenshots/Smart_Attach.png" alt="Smart Attachment System" />
-            <div class="carousel-caption">
-                <h3>Smart Attachment System</h3>
-                <p>Collaboration often involves sharing files. This system intelligently recognizes After Effects project files, presets, and common media formats, ensuring they are shared securely and can be downloaded/opened directly by other team members.</p>
-            </div>
         </div>
     
-        <div class="carousel-slide ">
+        <div class="carousel-slide " data-title="MoHub Ecosystem" data-desc="MoHub is the bridge between your technical tools and creative assets. It provides a seamless transition between the chat collaboration tools and the high-end design utilities like Gradlette and TemGrid.">
             <img src="screenshots/Mohub.png" alt="MoHub Ecosystem" />
-            <div class="carousel-caption">
-                <h3>MoHub Ecosystem</h3>
-                <p>MoHub is the bridge between your technical tools and creative assets. It provides a seamless transition between the chat collaboration tools and the high-end design utilities like Gradlette and TemGrid.</p>
-            </div>
         </div>
     
-              </div>
-              <button class="carousel-btn carousel-prev">&larr;</button>
-              <button class="carousel-btn carousel-next">&rarr;</button>
-              <div class="carousel-nav">
-                  <div class="carousel-dot active" data-index="0"></div><div class="carousel-dot " data-index="1"></div><div class="carousel-dot " data-index="2"></div><div class="carousel-dot " data-index="3"></div><div class="carousel-dot " data-index="4"></div><div class="carousel-dot " data-index="5"></div>
-              </div>
-          </div>
+                </div>
+                <button class="carousel-btn carousel-prev">&larr;</button>
+                <button class="carousel-btn carousel-next">&rarr;</button>
+                <div class="carousel-nav">
+                    <div class="carousel-dot active" data-index="0"></div><div class="carousel-dot " data-index="1"></div><div class="carousel-dot " data-index="2"></div><div class="carousel-dot " data-index="3"></div><div class="carousel-dot " data-index="4"></div><div class="carousel-dot " data-index="5"></div>
+                </div>
+            </div>
+        </div>
       </div>
     </div>
 
@@ -1464,164 +1511,116 @@
     </div>
 
     
-    <div class="premium-splits" style="margin-bottom: 120px;">
-      <div class="feature-split fade-up ">
-          <div class="split-text">
-              <span class="split-eyebrow">Features Collection</span>
-              <h2 class="split-title">Gradlette Color Suite</h2>
-              <p class="split-desc">Generate, explore, and apply perfectly harmonic color palettes to your AE projects.</p>
-          </div>
-          <div class="split-visual carousel-container">
-              <div class="carousel-track">
-                  
-        <div class="carousel-slide active">
+    <div style="margin-bottom: 120px;">
+      <div class="fade-up" style="text-align: center; max-width: 800px; margin: 0 auto 60px; padding: 0 24px;">
+          <span class="split-eyebrow">Features Collection</span>
+          <h2 class="split-title">Gradlette Color Suite</h2>
+          <p class="split-desc" style="margin: 0 auto;">Generate, explore, and apply perfectly harmonic color palettes to your AE projects.</p>
+      </div>
+      <div class="premium-splits carousel-wrapper">
+        <div class="feature-split fade-up ">
+            <div class="split-text dynamic-caption">
+                <h3 class="slide-title" style="font-size: 24px; font-weight: 800; margin-bottom: 16px;">Smart Palette Generator</h3>
+                <p class="slide-desc" style="font-size: 15px; color: #94A3B8; line-height: 1.7;">Harness the power of the Google palette engine to generate harmonic color schemes on the fly. Whether you need a monochromatic look or a vibrant triadic scheme, this tool provides logical color transitions that elevate the professional quality of your designs.</p>
+            </div>
+            <div class="split-visual carousel-container">
+                <div class="carousel-track">
+                    
+        <div class="carousel-slide active" data-title="Smart Palette Generator" data-desc="Harness the power of the Google palette engine to generate harmonic color schemes on the fly. Whether you need a monochromatic look or a vibrant triadic scheme, this tool provides logical color transitions that elevate the professional quality of your designs.">
             <img src="screenshots/Google_Generate.png" alt="Smart Palette Generator" />
-            <div class="carousel-caption">
-                <h3>Smart Palette Generator</h3>
-                <p>Harness the power of the Google palette engine to generate harmonic color schemes on the fly. Whether you need a monochromatic look or a vibrant triadic scheme, this tool provides logical color transitions that elevate the professional quality of your designs.</p>
-            </div>
         </div>
     
-        <div class="carousel-slide ">
+        <div class="carousel-slide " data-title="Global Design Library" data-desc="A centralized place to organize all your favorite design assets. Save specific fonts, color palettes, and icons into your &quot;My Library&quot; to reuse them across different projects, ensuring consistent branding for recurring clients.">
             <img src="screenshots/Google_My Librarry.png" alt="Global Design Library" />
-            <div class="carousel-caption">
-                <h3>Global Design Library</h3>
-                <p>A centralized place to organize all your favorite design assets. Save specific fonts, color palettes, and icons into your "My Library" to reuse them across different projects, ensuring consistent branding for recurring clients.</p>
-            </div>
         </div>
     
-        <div class="carousel-slide ">
+        <div class="carousel-slide " data-title="Gradlette Color Suite" data-desc="The &quot;Gradlette&quot; main interface is your hub for color management. It features a spacebar-driven random generator that follows color theory rules, allowing you to discover unique color combinations in seconds.">
             <img src="screenshots/Gradlette.png" alt="Gradlette Color Suite" />
-            <div class="carousel-caption">
-                <h3>Gradlette Color Suite</h3>
-                <p>The "Gradlette" main interface is your hub for color management. It features a spacebar-driven random generator that follows color theory rules, allowing you to discover unique color combinations in seconds.</p>
-            </div>
         </div>
     
-        <div class="carousel-slide ">
+        <div class="carousel-slide " data-title="AI Image Color Extractor" data-desc="Match your graphics to your source footage perfectly. Upload an image or capture a frame from your active composition, and MoChat's AI will extract a professional 5-color palette based on the dominant and accent tones in the image.">
             <img src="screenshots/Google_Image Extractor.png" alt="AI Image Color Extractor" />
-            <div class="carousel-caption">
-                <h3>AI Image Color Extractor</h3>
-                <p>Match your graphics to your source footage perfectly. Upload an image or capture a frame from your active composition, and MoChat's AI will extract a professional 5-color palette based on the dominant and accent tones in the image.</p>
-            </div>
         </div>
     
-        <div class="carousel-slide ">
+        <div class="carousel-slide " data-title="WCAG Contrast Checker" data-desc="Professional design requires professional accessibility. This tool checks the contrast ratio between your background and foreground colors to ensure your text is readable for all users and meets international WCAG 2.1 accessibility standards.">
             <img src="screenshots/Gradlette_Contrast Checker.png" alt="WCAG Contrast Checker" />
-            <div class="carousel-caption">
-                <h3>WCAG Contrast Checker</h3>
-                <p>Professional design requires professional accessibility. This tool checks the contrast ratio between your background and foreground colors to ensure your text is readable for all users and meets international WCAG 2.1 accessibility standards.</p>
-            </div>
         </div>
     
-        <div class="carousel-slide ">
+        <div class="carousel-slide " data-title="Harmonic Color Wheel" data-desc="A visual playground for color theory. Explore Analogous, Triadic, Complementary, and Tetradic relationships with a precision wheel. Adjust saturation and lightness in real-time to refine your project's mood.">
             <img src="screenshots/Gradlette_Color_whele.png" alt="Harmonic Color Wheel" />
-            <div class="carousel-caption">
-                <h3>Harmonic Color Wheel</h3>
-                <p>A visual playground for color theory. Explore Analogous, Triadic, Complementary, and Tetradic relationships with a precision wheel. Adjust saturation and lightness in real-time to refine your project's mood.</p>
-            </div>
         </div>
     
-              </div>
-              <button class="carousel-btn carousel-prev">&larr;</button>
-              <button class="carousel-btn carousel-next">&rarr;</button>
-              <div class="carousel-nav">
-                  <div class="carousel-dot active" data-index="0"></div><div class="carousel-dot " data-index="1"></div><div class="carousel-dot " data-index="2"></div><div class="carousel-dot " data-index="3"></div><div class="carousel-dot " data-index="4"></div><div class="carousel-dot " data-index="5"></div>
-              </div>
-          </div>
+                </div>
+                <button class="carousel-btn carousel-prev">&larr;</button>
+                <button class="carousel-btn carousel-next">&rarr;</button>
+                <div class="carousel-nav">
+                    <div class="carousel-dot active" data-index="0"></div><div class="carousel-dot " data-index="1"></div><div class="carousel-dot " data-index="2"></div><div class="carousel-dot " data-index="3"></div><div class="carousel-dot " data-index="4"></div><div class="carousel-dot " data-index="5"></div>
+                </div>
+            </div>
+        </div>
       </div>
     </div>
 
     
-    <div class="premium-splits" style="margin-bottom: 120px;">
-      <div class="feature-split fade-up force-reverse">
-          <div class="split-text">
-              <span class="split-eyebrow">Features Collection</span>
-              <h2 class="split-title">TemGrid Composition Guides</h2>
-              <p class="split-desc">Professional layout grids overlaying your viewer ensure your designs have perfect rhythm and balance.</p>
-          </div>
-          <div class="split-visual carousel-container">
-              <div class="carousel-track">
-                  
-        <div class="carousel-slide active">
+    <div style="margin-bottom: 120px;">
+      <div class="fade-up" style="text-align: center; max-width: 800px; margin: 0 auto 60px; padding: 0 24px;">
+          <span class="split-eyebrow">Features Collection</span>
+          <h2 class="split-title">TemGrid Composition Guides</h2>
+          <p class="split-desc" style="margin: 0 auto;">Professional layout grids overlaying your viewer ensure your designs have perfect rhythm and balance.</p>
+      </div>
+      <div class="premium-splits carousel-wrapper">
+        <div class="feature-split fade-up force-reverse">
+            <div class="split-text dynamic-caption">
+                <h3 class="slide-title" style="font-size: 24px; font-weight: 800; margin-bottom: 16px;">TemGrid: Rule of Thirds</h3>
+                <p class="slide-desc" style="font-size: 15px; color: #94A3B8; line-height: 1.7;">The standard for photographic and cinematic composition. This 3x3 grid helps you place points of interest on the intersections for a more dynamic and balanced frame than simple centering.</p>
+            </div>
+            <div class="split-visual carousel-container">
+                <div class="carousel-track">
+                    
+        <div class="carousel-slide active" data-title="TemGrid: Rule of Thirds" data-desc="The standard for photographic and cinematic composition. This 3x3 grid helps you place points of interest on the intersections for a more dynamic and balanced frame than simple centering.">
             <img src="screenshots/TemGrid_Rule_of_Thirds.png" alt="TemGrid: Rule of Thirds" />
-            <div class="carousel-caption">
-                <h3>TemGrid: Rule of Thirds</h3>
-                <p>The standard for photographic and cinematic composition. This 3x3 grid helps you place points of interest on the intersections for a more dynamic and balanced frame than simple centering.</p>
-            </div>
         </div>
     
-        <div class="carousel-slide ">
+        <div class="carousel-slide " data-title="TemGrid: Column Grid" data-desc="Standard 12-column (or custom) layout guides. Use these to structure complex informational layouts, dashboards, and web-stye designs with consistent margins and gutters.">
             <img src="screenshots/TemGrid_Column_Grid.png" alt="TemGrid: Column Grid" />
-            <div class="carousel-caption">
-                <h3>TemGrid: Column Grid</h3>
-                <p>Standard 12-column (or custom) layout guides. Use these to structure complex informational layouts, dashboards, and web-stye designs with consistent margins and gutters.</p>
-            </div>
         </div>
     
-        <div class="carousel-slide ">
+        <div class="carousel-slide " data-title="TemGrid: Modular Grid" data-desc="Beyond simple columns, the modular grid creates a matrix of &quot;zones.&quot; This is perfect for complex screen designs where you need to balance text, data, and imagery in a tight, organized space.">
             <img src="screenshots/TemGrid_Modular_Grid.png" alt="TemGrid: Modular Grid" />
-            <div class="carousel-caption">
-                <h3>TemGrid: Modular Grid</h3>
-                <p>Beyond simple columns, the modular grid creates a matrix of "zones." This is perfect for complex screen designs where you need to balance text, data, and imagery in a tight, organized space.</p>
-            </div>
         </div>
     
-        <div class="carousel-slide ">
+        <div class="carousel-slide " data-title="TemGrid: Baseline Grid" data-desc="Achieve perfect vertical rhythm in your typography. This grid guide provides consistent horizontal lines to ensure all your text layers are aligned perfectly, essential for professional UI and editorial animations.">
             <img src="screenshots/TemGrid_Baseline_Grid.png" alt="TemGrid: Baseline Grid" />
-            <div class="carousel-caption">
-                <h3>TemGrid: Baseline Grid</h3>
-                <p>Achieve perfect vertical rhythm in your typography. This grid guide provides consistent horizontal lines to ensure all your text layers are aligned perfectly, essential for professional UI and editorial animations.</p>
-            </div>
         </div>
     
-        <div class="carousel-slide ">
+        <div class="carousel-slide " data-title="TemGrid: Golden Ratio" data-desc="Apply the &quot;Phi&quot; ratio (1.618) to your compositions. This guide helps you place elements in a way that is naturally pleasing to the human eye, used by master painters and filmmakers for centuries.">
             <img src="screenshots/TemGrid_Golden_Ratio.png" alt="TemGrid: Golden Ratio" />
-            <div class="carousel-caption">
-                <h3>TemGrid: Golden Ratio</h3>
-                <p>Apply the "Phi" ratio (1.618) to your compositions. This guide helps you place elements in a way that is naturally pleasing to the human eye, used by master painters and filmmakers for centuries.</p>
-            </div>
         </div>
     
-        <div class="carousel-slide ">
+        <div class="carousel-slide " data-title="TemGrid: Center Cross" data-desc="The simplest yet most essential guide. It overlays a precise crosshair at the mathematical center of your composition, making it easy to center subjects or align logos perfectly.">
             <img src="screenshots/TemGrid_Center_Cross.png" alt="TemGrid: Center Cross" />
-            <div class="carousel-caption">
-                <h3>TemGrid: Center Cross</h3>
-                <p>The simplest yet most essential guide. It overlays a precise crosshair at the mathematical center of your composition, making it easy to center subjects or align logos perfectly.</p>
-            </div>
         </div>
     
-        <div class="carousel-slide ">
+        <div class="carousel-slide " data-title="TemGrid: Pixel Grid" data-desc="When every pixel counts. This fine mesh guide helps you align your shape paths and text to the pixel grid, preventing &quot;blurry&quot; edges and ensuring your graphics look crisp on all screens.">
             <img src="screenshots/TemGrid_Pixel_Grid.png" alt="TemGrid: Pixel Grid" />
-            <div class="carousel-caption">
-                <h3>TemGrid: Pixel Grid</h3>
-                <p>When every pixel counts. This fine mesh guide helps you align your shape paths and text to the pixel grid, preventing "blurry" edges and ensuring your graphics look crisp on all screens.</p>
-            </div>
         </div>
     
-        <div class="carousel-slide ">
+        <div class="carousel-slide " data-title="TemGrid: Isometric Grid" data-desc="Creating 2.5D graphics has never been easier. This tool generates 30° degree diagonal guides, allowing you to build perfect isometric shapes and layouts without needing complex 3D software.">
             <img src="screenshots/TemGrid_Isometric.png" alt="TemGrid: Isometric Grid" />
-            <div class="carousel-caption">
-                <h3>TemGrid: Isometric Grid</h3>
-                <p>Creating 2.5D graphics has never been easier. This tool generates 30° degree diagonal guides, allowing you to build perfect isometric shapes and layouts without needing complex 3D software.</p>
-            </div>
         </div>
     
-        <div class="carousel-slide ">
+        <div class="carousel-slide " data-title="TemGrid: Safe Areas" data-desc="Ensure your content works on every screen. Toggle between Action Safe and Title Safe guides to make sure your important information isn't cut off by different TV aspect ratios or social media UI overlays.">
             <img src="screenshots/TemGrid_Safe_Areas.png" alt="TemGrid: Safe Areas" />
-            <div class="carousel-caption">
-                <h3>TemGrid: Safe Areas</h3>
-                <p>Ensure your content works on every screen. Toggle between Action Safe and Title Safe guides to make sure your important information isn't cut off by different TV aspect ratios or social media UI overlays.</p>
-            </div>
         </div>
     
-              </div>
-              <button class="carousel-btn carousel-prev">&larr;</button>
-              <button class="carousel-btn carousel-next">&rarr;</button>
-              <div class="carousel-nav">
-                  <div class="carousel-dot active" data-index="0"></div><div class="carousel-dot " data-index="1"></div><div class="carousel-dot " data-index="2"></div><div class="carousel-dot " data-index="3"></div><div class="carousel-dot " data-index="4"></div><div class="carousel-dot " data-index="5"></div><div class="carousel-dot " data-index="6"></div><div class="carousel-dot " data-index="7"></div><div class="carousel-dot " data-index="8"></div>
-              </div>
-          </div>
+                </div>
+                <button class="carousel-btn carousel-prev">&larr;</button>
+                <button class="carousel-btn carousel-next">&rarr;</button>
+                <div class="carousel-nav">
+                    <div class="carousel-dot active" data-index="0"></div><div class="carousel-dot " data-index="1"></div><div class="carousel-dot " data-index="2"></div><div class="carousel-dot " data-index="3"></div><div class="carousel-dot " data-index="4"></div><div class="carousel-dot " data-index="5"></div><div class="carousel-dot " data-index="6"></div><div class="carousel-dot " data-index="7"></div><div class="carousel-dot " data-index="8"></div>
+                </div>
+            </div>
+        </div>
       </div>
     </div>
 
