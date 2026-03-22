@@ -228,13 +228,16 @@ const styles = `
     }
     .carousel-slide {
         position: absolute; inset: 0;
-        opacity: 0; transition: opacity 0.7s ease-in-out;
+        opacity: 0; transition: opacity 0.3s ease-in-out;
         pointer-events: none; z-index: 0;
+        display: flex; align-items: center; justify-content: center;
     }
     .carousel-slide.active { opacity: 1; pointer-events: auto; z-index: 10; }
     .carousel-slide img { 
-        width: 100%; height: 100%; object-fit: contain; 
-        margin: 0 auto; display: block; border-radius: 12px;
+        max-width: 100%; max-height: 100%; object-fit: contain; 
+        margin: 0 auto; display: block; border-radius: 16px;
+        box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+        border: 1px solid rgba(255,255,255,0.1);
     }
     
     .carousel-btn {
