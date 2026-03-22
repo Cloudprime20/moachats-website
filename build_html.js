@@ -21,7 +21,6 @@ function buildCarousel(title, subtitle, imageList, reverse=false) {
     let slidesHtml = items.map((item, i) => `
         <div class="carousel-slide ${i === 0 ? 'active' : ''}" data-title="${item.title.replace(/"/g, '&quot;')}" data-desc="${item.desc.replace(/"/g, '&quot;')}">
             <img src="screenshots/${item.image}" alt="${item.title}" />
-            <div class="carousel-overlay"></div>
         </div>
     `).join('');
 
@@ -46,7 +45,7 @@ function buildCarousel(title, subtitle, imageList, reverse=false) {
             </div>
             <div class="split-visual" style="background: transparent; display: flex; flex-direction: column; gap: 16px; border: none; box-shadow: none;">
                 <!-- Main Image Viewport -->
-                <div class="carousel-container group" style="background: #141620; border-radius: 20px; box-shadow: 0 40px 80px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.08);">
+                <div class="carousel-container group" style="background: transparent;">
                     <div class="carousel-track">
                         ${slidesHtml}
                     </div>
@@ -222,7 +221,7 @@ const modifiedHtml = indexHtmlContent.substring(0, topIndex) + newHtmlContent + 
 const styles = `
     .carousel-container {
         position: relative; overflow: hidden; height: 500px; width: 100%;
-        background: #141620;
+        background: transparent;
     }
     .carousel-track {
         display: flex; height: 100%; width: 100%; position: relative; overflow: hidden;
@@ -236,10 +235,6 @@ const styles = `
     .carousel-slide img { 
         width: 100%; height: 100%; object-fit: contain; 
         margin: 0 auto; display: block; border-radius: 12px;
-    }
-    .carousel-overlay {
-        position: absolute; inset: 0; pointer-events: none;
-        background: linear-gradient(to top, rgba(6,6,8,0.6), transparent 50%);
     }
     
     .carousel-btn {
