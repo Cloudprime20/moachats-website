@@ -1,0 +1,126 @@
+<script>
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+---
+<script>
+    // Carousel Logic
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.carousel-container').forEach(container => {
+            const track = container.querySelector('.carousel-track');
+            const slides = container.querySelectorAll('.carousel-slide');
+            const dots = container.querySelectorAll('.carousel-dot');
+            const prev = container.querySelector('.carousel-prev');
+            const next = container.querySelector('.carousel-next');
+            let currentIndex = 0;
+
+            function goToSlide(index) {
+                if(index < 0) index = slides.length - 1;
+                if(index >= slides.length) index = 0;
+                currentIndex = index;
+                track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+                dots.forEach((d, i) => d.classList.toggle('active', i === currentIndex));
+            }
+
+            if(prev) prev.addEventListener('click', () => goToSlide(currentIndex - 1));
+            if(next) next.addEventListener('click', () => goToSlide(currentIndex + 1));
+            dots.forEach((dot, i) => dot.addEventListener('click', () => goToSlide(i)));
+        });
+    });
+  </script>
+---
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.carousel-container').forEach(container => {
+            const visualContainer = container.closest('.split-visual');
+            const slides = container.querySelectorAll('.carousel-slide');
+            const thumbs = visualContainer.querySelectorAll('.carousel-thumb');
+            const prev = container.querySelector('.carousel-prev');
+            const next = container.querySelector('.carousel-next');
+            let currentIndex = 0;
+            let timeoutId;
+            let isHovered = false;
+
+            function startAutoplay() {
+                clearTimeout(timeoutId);
+                if (!isHovered) {
+                    timeoutId = setTimeout(() => goToSlide(currentIndex + 1), 4000);
+                }
+            }
+
+            visualContainer.addEventListener('mouseenter', () => { isHovered = true; clearTimeout(timeoutId); });
+            visualContainer.addEventListener('mouseleave', () => { isHovered = false; startAutoplay(); });
+
+            function goToSlide(index) {
+                if(index < 0) index = slides.length - 1;
+                if(index >= slides.length) index = 0;
+                currentIndex = index;
+                
+                slides.forEach((s, i) => {
+                    const isActive = i === currentIndex;
+                    s.classList.toggle('active', isActive);
+                    if (isActive) {
+                        const title = s.getAttribute('data-title');
+                        const desc = s.getAttribute('data-desc');
+                        const wrapper = container.closest('.carousel-wrapper');
+                        if (wrapper) {
+                            const titleEl = wrapper.querySelector('.slide-title');
+                            const descEl = wrapper.querySelector('.slide-desc');
+                            if (titleEl) titleEl.innerText = title;
+                            if (descEl) descEl.innerText = desc;
+                        }
+                    }
+                });
+                
+                thumbs.forEach((t, i) => t.classList.toggle('active', i === currentIndex));
+                startAutoplay();
+            }
+
+            if(prev) prev.addEventListener('click', () => goToSlide(currentIndex - 1));
+            if(next) next.addEventListener('click', () => goToSlide(currentIndex + 1));
+            thumbs.forEach((t, i) => t.addEventListener('click', () => goToSlide(i)));
+            
+            startAutoplay();
+        });
+
+        // Hero Mouse Parallax
+        const heroVisual = document.querySelector('.hero-visual');
+        const layers = document.querySelectorAll('.hero-layer');
+        if (heroVisual) {
+            heroVisual.addEventListener('mousemove', (e) => {
+                const rect = heroVisual.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const deltaX = (x - centerX) / centerX;
+                const deltaY = (y - centerY) / centerY;
+                
+                layers.forEach((layer, index) => {
+                    const depth = (index + 1) * 8; 
+                    const rotateX = -deltaY * depth * 0.4;
+                    const rotateY = deltaX * depth * 0.4;
+                    const translateX = -deltaX * depth * 1.5;
+                    const translateY = -deltaY * depth * 1.5;
+                    
+                    layer.style.transform = `translate(${translateX}px, ${translateY}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                });
+            });
+
+            heroVisual.addEventListener('mouseleave', () => {
+                layers.forEach(layer => {
+                    layer.style.transform = 'translate(0px, 0px) rotateX(0deg) rotateY(0deg)';
+                });
+            });
+        }
+    });
+  </script>
