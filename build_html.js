@@ -21,10 +21,15 @@ function buildCarousel(title, subtitle, imageList, reverse=false) {
     let slidesHtml = items.map((item, i) => `
         <div class="carousel-slide ${i === 0 ? 'active' : ''}" data-title="${item.title.replace(/"/g, '&quot;')}" data-desc="${item.desc.replace(/"/g, '&quot;')}">
             <img src="screenshots/${item.image}" alt="${item.title}" />
+            <div class="carousel-overlay"></div>
         </div>
     `).join('');
 
-    let dotsHtml = items.map((_, i) => `<div class="carousel-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></div>`).join('');
+    let thumbsHtml = items.map((item, i) => `
+        <button class="carousel-thumb ${i === 0 ? 'active' : ''}" data-index="${i}">
+            <img src="screenshots/${item.image}" alt="Thumbnail ${i + 1}" />
+        </button>
+    `).join('');
 
     return `
     <div style="margin-bottom: 120px;">
@@ -39,14 +44,18 @@ function buildCarousel(title, subtitle, imageList, reverse=false) {
                 <h3 class="slide-title" style="font-size: 24px; font-weight: 800; margin-bottom: 16px;">${items[0].title}</h3>
                 <p class="slide-desc" style="font-size: 15px; color: #94A3B8; line-height: 1.7;">${items[0].desc}</p>
             </div>
-            <div class="split-visual carousel-container">
-                <div class="carousel-track">
-                    ${slidesHtml}
+            <div class="split-visual" style="background: transparent; display: flex; flex-direction: column; gap: 16px; border: none; box-shadow: none;">
+                <!-- Main Image Viewport -->
+                <div class="carousel-container group" style="background: #141620; border-radius: 20px; box-shadow: 0 40px 80px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.08);">
+                    <div class="carousel-track">
+                        ${slidesHtml}
+                    </div>
+                    <button class="carousel-btn carousel-prev">&larr;</button>
+                    <button class="carousel-btn carousel-next">&rarr;</button>
                 </div>
-                <button class="carousel-btn carousel-prev">&larr;</button>
-                <button class="carousel-btn carousel-next">&rarr;</button>
-                <div class="carousel-nav">
-                    ${dotsHtml}
+                <!-- Thumbnail Navigation -->
+                <div class="carousel-thumbs">
+                    ${thumbsHtml}
                 </div>
             </div>
         </div>
@@ -212,45 +221,65 @@ const modifiedHtml = indexHtmlContent.substring(0, topIndex) + newHtmlContent + 
 
 const styles = `
     .carousel-container {
-        position: relative; overflow: hidden; height: 500px;
-        background: transparent;
+        position: relative; overflow: hidden; height: 500px; width: 100%;
+        background: #141620;
     }
     .carousel-track {
         display: flex; height: 100%; width: 100%; position: relative; overflow: hidden;
     }
     .carousel-slide {
         position: absolute; inset: 0;
-        opacity: 0; transition: opacity 0.5s ease;
-        pointer-events: none;
+        opacity: 0; transition: opacity 0.7s ease-in-out;
+        pointer-events: none; z-index: 0;
     }
-    .carousel-slide.active { opacity: 1; pointer-events: auto; }
+    .carousel-slide.active { opacity: 1; pointer-events: auto; z-index: 10; }
     .carousel-slide img { 
         width: 100%; height: 100%; object-fit: contain; 
-        max-height: 500px; margin: 0 auto; display: block; border-radius: 12px;
+        margin: 0 auto; display: block; border-radius: 12px;
     }
-    /* Removed inline carousel caption since it was moved outside */
+    .carousel-overlay {
+        position: absolute; inset: 0; pointer-events: none;
+        background: linear-gradient(to top, rgba(6,6,8,0.6), transparent 50%);
+    }
     
     .carousel-btn {
         position: absolute; top: 50%; transform: translateY(-50%);
-        width: 36px; height: 36px; border-radius: 50%;
-        background: rgba(29,161,255,0.2); border: 1px solid rgba(29,161,255,0.4);
-        color: white; cursor: pointer; z-index: 10;
+        width: 40px; height: 40px; border-radius: 50%;
+        background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1);
+        color: white; cursor: pointer; z-index: 20;
         display: flex; align-items: center; justify-content: center;
-        transition: all 0.2s;
+        transition: all 0.3s; opacity: 0; backdrop-filter: blur(8px);
     }
-    .carousel-btn:hover { background: rgba(29,161,255,0.8); }
+    .group:hover .carousel-btn { opacity: 1; }
+    .carousel-btn:hover { background: rgba(0,0,0,0.7); transform: translateY(-50%) scale(1.1); box-shadow: 0 0 0 2px rgba(255,255,255,0.3); }
     .carousel-prev { left: 16px; }
     .carousel-next { right: 16px; }
 
-    .carousel-nav {
-        position: absolute; bottom: 16px; right: 16px;
-        display: flex; gap: 8px; z-index: 10;
+    .carousel-thumbs {
+        display: flex; justify-content: center; gap: 12px;
+        width: 100%; overflow-x: auto; padding-bottom: 8px;
     }
-    .carousel-dot {
-        width: 8px; height: 8px; border-radius: 50%;
-        background: rgba(255,255,255,0.3); cursor: pointer; transition: background 0.3s;
+    .carousel-thumb {
+        position: relative; flex-shrink: 0;
+        width: 60px; height: 80px; border-radius: 8px;
+        overflow: hidden; cursor: pointer;
+        border: none; outline: none; background: transparent;
+        transition: all 0.3s; opacity: 0.5;
+        box-shadow: 0 0 0 1px rgba(255,255,255,0.1);
+        transform: scale(0.95);
     }
-    .carousel-dot.active { background: #1DA1FF; box-shadow: 0 0 10px #1DA1FF; }
+    @media (min-width: 640px) {
+        .carousel-thumb { width: 70px; height: 95px; }
+    }
+    .carousel-thumb:hover { opacity: 1; transform: scale(1); }
+    .carousel-thumb.active {
+        opacity: 1; transform: scale(1);
+        box-shadow: 0 0 0 2px white;
+    }
+    .carousel-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .carousel-thumb.active::after {
+        content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.1);
+    }
 
     /* Side features image handling */
     .side-visual { background: transparent; display: flex; align-items: center; justify-content: center; }
@@ -280,16 +309,30 @@ const jsCode = `
   <script>
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.carousel-container').forEach(container => {
+            const visualContainer = container.closest('.split-visual');
             const slides = container.querySelectorAll('.carousel-slide');
-            const dots = container.querySelectorAll('.carousel-dot');
+            const thumbs = visualContainer.querySelectorAll('.carousel-thumb');
             const prev = container.querySelector('.carousel-prev');
             const next = container.querySelector('.carousel-next');
             let currentIndex = 0;
+            let timeoutId;
+            let isHovered = false;
+
+            function startAutoplay() {
+                clearTimeout(timeoutId);
+                if (!isHovered) {
+                    timeoutId = setTimeout(() => goToSlide(currentIndex + 1), 4000);
+                }
+            }
+
+            visualContainer.addEventListener('mouseenter', () => { isHovered = true; clearTimeout(timeoutId); });
+            visualContainer.addEventListener('mouseleave', () => { isHovered = false; startAutoplay(); });
 
             function goToSlide(index) {
                 if(index < 0) index = slides.length - 1;
                 if(index >= slides.length) index = 0;
                 currentIndex = index;
+                
                 slides.forEach((s, i) => {
                     const isActive = i === currentIndex;
                     s.classList.toggle('active', isActive);
@@ -305,12 +348,16 @@ const jsCode = `
                         }
                     }
                 });
-                dots.forEach((d, i) => d.classList.toggle('active', i === currentIndex));
+                
+                thumbs.forEach((t, i) => t.classList.toggle('active', i === currentIndex));
+                startAutoplay();
             }
 
             if(prev) prev.addEventListener('click', () => goToSlide(currentIndex - 1));
             if(next) next.addEventListener('click', () => goToSlide(currentIndex + 1));
-            dots.forEach((dot, i) => dot.addEventListener('click', () => goToSlide(i)));
+            thumbs.forEach((t, i) => t.addEventListener('click', () => goToSlide(i)));
+            
+            startAutoplay();
         });
 
         // Hero Mouse Parallax
