@@ -798,7 +798,173 @@
       opacity: 1;
       transform: translateY(0);
     }
-  </style>
+  
+    .carousel-caption {
+        position: absolute;
+        bottom: 0; left: 0; right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+        padding: 40px 24px 24px;
+        pointer-events: none;
+    }
+    .carousel-container:hover .carousel-caption { opacity: 1; }
+
+    .carousel-container {
+        position: relative; overflow: hidden; height: 420px;
+    }
+    .carousel-track {
+        display: flex; height: 100%; width: 100%; position: relative; overflow: hidden;
+    }
+    .carousel-slide {
+        position: absolute; inset: 0;
+        opacity: 0; transition: opacity 0.5s ease;
+        pointer-events: none;
+    }
+    .carousel-slide.active { opacity: 1; pointer-events: auto; }
+    .carousel-slide img { width: 100%; height: 100%; object-fit: contain; background: #0c0c10; display: block; }
+    .carousel-caption {
+        position: absolute; bottom: 0; left: 0; right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+        padding: 40px 24px 24px;
+    }
+    .carousel-caption h3 { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
+    .carousel-caption p { font-size: 13px; color: #94A3B8; line-height: 1.6; margin: 0; }
+    
+    .carousel-btn {
+        position: absolute; top: 50%; transform: translateY(-50%);
+        width: 36px; height: 36px; border-radius: 50%;
+        background: rgba(29,161,255,0.2); border: 1px solid rgba(29,161,255,0.4);
+        color: white; cursor: pointer; z-index: 10;
+        display: flex; align-items: center; justify-content: center;
+        transition: all 0.2s;
+    }
+    .carousel-btn:hover { background: rgba(29,161,255,0.8); }
+    .carousel-prev { left: 16px; }
+    .carousel-next { right: 16px; }
+
+    .carousel-nav {
+        position: absolute; bottom: 16px; right: 16px;
+        display: flex; gap: 8px; z-index: 10;
+    }
+    .carousel-dot {
+        width: 8px; height: 8px; border-radius: 50%;
+        background: rgba(255,255,255,0.3); cursor: pointer; transition: background 0.3s;
+    }
+    .carousel-dot.active { background: #1DA1FF; box-shadow: 0 0 10px #1DA1FF; }
+
+    @media (min-width: 900px) {
+        .feature-split.force-reverse { flex-direction: row-reverse !important; }
+    }
+
+    .carousel-container {
+        position: relative; overflow: hidden; height: 500px;
+        background: #141620; padding: 20px;
+    }
+    .carousel-track {
+        display: flex; height: 100%; width: 100%; position: relative; overflow: hidden;
+    }
+    .carousel-slide {
+        position: absolute; inset: 0;
+        opacity: 0; transition: opacity 0.5s ease;
+        pointer-events: none;
+    }
+    .carousel-slide.active { opacity: 1; pointer-events: auto; }
+    .carousel-slide img { 
+        width: 100%; height: 100%; object-fit: contain; 
+        max-height: 500px; margin: 0 auto; display: block; border-radius: 12px;
+    }
+    .carousel-caption {
+        position: absolute; bottom: 0; left: 0; right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+        padding: 40px 24px 24px; border-radius: 0 0 20px 20px;
+    }
+    .carousel-caption h3 { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
+    .carousel-caption p { font-size: 13px; color: #94A3B8; line-height: 1.6; margin: 0; }
+    
+    .carousel-btn {
+        position: absolute; top: 50%; transform: translateY(-50%);
+        width: 36px; height: 36px; border-radius: 50%;
+        background: rgba(29,161,255,0.2); border: 1px solid rgba(29,161,255,0.4);
+        color: white; cursor: pointer; z-index: 10;
+        display: flex; align-items: center; justify-content: center;
+        transition: all 0.2s;
+    }
+    .carousel-btn:hover { background: rgba(29,161,255,0.8); }
+    .carousel-prev { left: 16px; }
+    .carousel-next { right: 16px; }
+
+    .carousel-nav {
+        position: absolute; bottom: 16px; right: 16px;
+        display: flex; gap: 8px; z-index: 10;
+    }
+    .carousel-dot {
+        width: 8px; height: 8px; border-radius: 50%;
+        background: rgba(255,255,255,0.3); cursor: pointer; transition: background 0.3s;
+    }
+    .carousel-dot.active { background: #1DA1FF; box-shadow: 0 0 10px #1DA1FF; }
+
+    /* Side features image handling */
+    .side-visual { background: #141620; padding: 20px; display: flex; align-items: center; justify-content: center; }
+    .side-visual img { max-width: 100%; max-height: 400px; object-fit: contain; border-radius: 12px; }
+
+    @media (min-width: 900px) {
+        .feature-split.force-reverse { flex-direction: row-reverse !important; }
+    }
+
+    .carousel-container {
+        position: relative; overflow: hidden; height: 500px;
+        background: #141620; padding: 20px;
+    }
+    .carousel-track {
+        display: flex; height: 100%; width: 100%; position: relative; overflow: hidden;
+    }
+    .carousel-slide {
+        position: absolute; inset: 0;
+        opacity: 0; transition: opacity 0.5s ease;
+        pointer-events: none;
+    }
+    .carousel-slide.active { opacity: 1; pointer-events: auto; }
+    .carousel-slide img { 
+        width: 100%; height: 100%; object-fit: contain; 
+        max-height: 500px; margin: 0 auto; display: block; border-radius: 12px;
+    }
+    .carousel-caption {
+        position: absolute; bottom: 0; left: 0; right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+        padding: 40px 24px 24px; border-radius: 0 0 20px 20px;
+    }
+    .carousel-caption h3 { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
+    .carousel-caption p { font-size: 13px; color: #94A3B8; line-height: 1.6; margin: 0; }
+    
+    .carousel-btn {
+        position: absolute; top: 50%; transform: translateY(-50%);
+        width: 36px; height: 36px; border-radius: 50%;
+        background: rgba(29,161,255,0.2); border: 1px solid rgba(29,161,255,0.4);
+        color: white; cursor: pointer; z-index: 10;
+        display: flex; align-items: center; justify-content: center;
+        transition: all 0.2s;
+    }
+    .carousel-btn:hover { background: rgba(29,161,255,0.8); }
+    .carousel-prev { left: 16px; }
+    .carousel-next { right: 16px; }
+
+    .carousel-nav {
+        position: absolute; bottom: 16px; right: 16px;
+        display: flex; gap: 8px; z-index: 10;
+    }
+    .carousel-dot {
+        width: 8px; height: 8px; border-radius: 50%;
+        background: rgba(255,255,255,0.3); cursor: pointer; transition: background 0.3s;
+    }
+    .carousel-dot.active { background: #1DA1FF; box-shadow: 0 0 10px #1DA1FF; }
+
+    /* Side features image handling */
+    .side-visual { background: #141620; padding: 20px; display: flex; align-items: center; justify-content: center; }
+    .side-visual img { max-width: 100%; max-height: 400px; object-fit: contain; border-radius: 12px; }
+
+    @media (min-width: 900px) {
+        .feature-split.force-reverse { flex-direction: row-reverse !important; }
+    }
+</style>
 </head>
 
 <body>
@@ -823,266 +989,423 @@
     </div>
   </nav>
 
-  <!-- ─── HERO ─── -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-badge">
-        <span class="dot"></span>
-        Real-time collaboration for After Effects
-      </div>
-      <h1>
-        <span class="gradient-text">Collaborate</span><br />
-        Inside Your Timeline
-      </h1>
-      <p class="hero-sub">
-        MoaChat brings chat, video review, and team communication directly into After Effects.
-        No more switching apps — stay in your creative flow.
-      </p>
-      <div class="hero-actions">
-        <a href="https://aescripts.com/moachat/" target="_blank" class="btn-hero">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-          </svg>
-          Download Plugin
-        </a>
-        <a href="pricing.html" class="btn-hero-ghost">
-          View Pricing →
-        </a>
-      </div>
+  
 
-      <div class="hero-stats">
-        <div class="stat-item">
-          <div class="stat-num">Real-time</div>
-          <div class="stat-label">Team Messaging</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">E2EE</div>
-          <div class="stat-label">Encrypted by Default</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">MoPack</div>
-          <div class="stat-label">Video Review System</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">CC+</div>
-          <div class="stat-label">After Effects Support</div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- ─── PREVIEW / MOCKUP ─── -->
-  <section class="preview-section fade-up">
-    <div class="preview-wrapper">
-      <div class="preview-topbar">
-        <div class="preview-dots">
-          <span class="d1"></span>
-          <span class="d2"></span>
-          <span class="d3"></span>
-        </div>
-        <div class="preview-url">moachats.shop/mopack · MoPack Video Review</div>
-      </div>
-      <div class="preview-body">
-        <div class="preview-player">
-          <div class="preview-play-btn">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
-          </div>
-          <div class="preview-timeline">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="white" opacity="0.6">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
-            <div class="timeline-bar">
-              <div class="timeline-progress"></div>
+
+<!-- ─── HERO REPLACEMENT ─── -->
+<section class="hero" style="min-height: 100vh; padding: 120px 24px 80px; position: relative;">
+    <div class="hero-inner" style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 40px; flex-wrap: wrap;">
+        <!-- Left Text -->
+        <div class="hero-text" style="flex: 1; min-width: 300px; text-align: left;">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                Real-time collaboration for After Effects
             </div>
-            <span style="font-size:11px; color:#64748B; font-family:monospace;">0:42 / 1:55</span>
-          </div>
-        </div>
-        <div class="preview-sidebar">
-          <div class="sidebar-header">Comments · 3</div>
-          <div class="comment-item">
-            <div class="comment-user">
-              <div class="comment-avatar" style="background:linear-gradient(135deg,#3b82f6,#8b5cf6)">S</div>
-              <span class="comment-name" style="color:#93C5FD">Sara</span>
-              <span class="comment-time">0:14</span>
+            <h1 style="text-align:left;">
+                <span class="gradient-text">Collaborate</span><br />
+                Inside Your Timeline
+            </h1>
+            <p class="hero-sub" style="margin-left:0; text-align:left;">
+                MoaChat brings chat, video review, and team communication directly into After Effects.
+                No more switching apps — stay in your creative flow.
+            </p>
+            <div class="hero-actions" style="justify-content: flex-start;">
+                <a href="https://aescripts.com/moachat/" target="_blank" class="btn-hero">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                    </svg>
+                    Download Plugin
+                </a>
+                <a href="pricing.html" class="btn-hero-ghost">
+                    View Pricing →
+                </a>
             </div>
-            <div class="comment-text">This transition feels too fast, can we ease it out more?</div>
-            <span class="comment-ts">0:14</span>
-          </div>
-          <div class="comment-item">
-            <div class="comment-user">
-              <div class="comment-avatar" style="background:linear-gradient(135deg,#10b981,#059669)">A</div>
-              <span class="comment-name" style="color:#6EE7B7">Alex</span>
-              <span class="comment-time">0:32</span>
+            
+            <div class="hero-stats" style="justify-content: flex-start; margin-top: 40px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.06);">
+                <div class="stat-item" style="text-align:left;"><div class="stat-num" style="font-size:20px;">Real-time</div><div class="stat-label">Team Messaging</div></div>
+                <div class="stat-item" style="text-align:left;"><div class="stat-num" style="font-size:20px;">E2EE</div><div class="stat-label">Encrypted by Default</div></div>
+                <div class="stat-item" style="text-align:left;"><div class="stat-num" style="font-size:20px;">MoPack</div><div class="stat-label">Video Review System</div></div>
             </div>
-            <div class="comment-text">Love the color grade here ✨</div>
-            <span class="comment-ts">0:32</span>
+        </div>
+        <!-- Right Visual (3 Layered Images) -->
+        <div class="hero-visual" style="flex: 1.2; min-width: 300px; position: relative; min-height: 480px; display: flex; align-items: center; justify-content: center;">
+            <img src="screenshots/Moachat_home_page.png" alt="Home" style="position: absolute; right: 0; top: 5%; width: 70%; max-width: 450px; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); z-index: 1;" />
+            <img src="screenshots/Mohub.png" alt="Hub" style="position: absolute; left: 10%; top: 35%; width: 55%; max-width: 350px; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); z-index: 2;" />
+            <img src="screenshots/Share_Action.png" alt="Share" style="position: absolute; left: 0%; bottom: 5%; max-width: 250px; border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); z-index: 3;" />
+        </div>
+    </div>
+</section>
+
+<!-- ─── FEATURES REPLACEMENT ─── -->
+<section id="features" class="features-section" style="padding-top: 40px;">
+    
+  
+    <div class="premium-splits" style="margin-bottom: 120px;">
+      <div class="feature-split fade-up ">
+          <div class="split-text">
+              <span class="split-eyebrow">Features Collection</span>
+              <h2 class="split-title">Chat Feature</h2>
+              <p class="split-desc">Connect instantly with your team. Encrypted, fast, and fully integrated with your projects.</p>
           </div>
-          <div class="comment-item">
-            <div class="comment-user">
-              <div class="comment-avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">K</div>
-              <span class="comment-name" style="color:#FCD34D">Kim</span>
-              <span class="comment-time">0:42</span>
+          <div class="split-visual carousel-container">
+              <div class="carousel-track">
+                  
+        <div class="carousel-slide active">
+            <img src="screenshots/Moachat_home_page.png" alt="MoChat Main Dashboard" />
+            <div class="carousel-caption">
+                <h3>MoChat Main Dashboard</h3>
+                <p>The "Home" of the plugin. This centralized view displays your active conversations, recent notifications, and quick-launch icons for the entire suite of MoChat tools, keeping your workflow organized.</p>
             </div>
-            <div class="comment-text">Text is overlapping the logo at this frame</div>
-            <span class="comment-ts">0:42</span>
+        </div>
+    
+        <div class="carousel-slide ">
+            <img src="screenshots/Group_Chat.png" alt="Secure Group Chat" />
+            <div class="carousel-caption">
+                <h3>Secure Group Chat</h3>
+                <p>Bring the whole team together in one secure thread. Create dedicated chat rooms for specific projects, allowing producers, designers, and animators to share feedback, links, and assets in a centralized, encrypted environment.</p>
+            </div>
+        </div>
+    
+        <div class="carousel-slide ">
+            <img src="screenshots/End_to_end_encryption.png" alt="End-To-End Encryption" />
+            <div class="carousel-caption">
+                <h3>End-To-End Encryption</h3>
+                <p>MoChat prioritizes project security with industry-standard E2EE. This ensures that your sensitive client discussions, project files, and media links remain private and can only be read by the intended recipients. Stay HIPAA and GDPR compliant while collaborating on high-value motion design projects.</p>
+            </div>
+        </div>
+    
+        <div class="carousel-slide ">
+            <img src="screenshots/Share_Action.png" alt="Shared Actions Hub" />
+            <div class="carousel-caption">
+                <h3>Shared Actions Hub</h3>
+                <p>A dedicated menu for sharing project data. Whether you need to export a specific frame for review, share a color palette with a teammate, or send a project-sync request, all sharing actions are consolidated here for speed.</p>
+            </div>
+        </div>
+    
+        <div class="carousel-slide ">
+            <img src="screenshots/Smart_Attach.png" alt="Smart Attachment System" />
+            <div class="carousel-caption">
+                <h3>Smart Attachment System</h3>
+                <p>Collaboration often involves sharing files. This system intelligently recognizes After Effects project files, presets, and common media formats, ensuring they are shared securely and can be downloaded/opened directly by other team members.</p>
+            </div>
+        </div>
+    
+        <div class="carousel-slide ">
+            <img src="screenshots/Mohub.png" alt="MoHub Ecosystem" />
+            <div class="carousel-caption">
+                <h3>MoHub Ecosystem</h3>
+                <p>MoHub is the bridge between your technical tools and creative assets. It provides a seamless transition between the chat collaboration tools and the high-end design utilities like Gradlette and TemGrid.</p>
+            </div>
+        </div>
+    
+              </div>
+              <button class="carousel-btn carousel-prev">&larr;</button>
+              <button class="carousel-btn carousel-next">&rarr;</button>
+              <div class="carousel-nav">
+                  <div class="carousel-dot active" data-index="0"></div><div class="carousel-dot " data-index="1"></div><div class="carousel-dot " data-index="2"></div><div class="carousel-dot " data-index="3"></div><div class="carousel-dot " data-index="4"></div><div class="carousel-dot " data-index="5"></div>
+              </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── FEATURES ─── -->
-  <section id="features" class="features-section">
-    <div class="section-eyebrow">What's Inside</div>
-    <h2 class="section-title">Everything Your Team Needs</h2>
-    <p class="section-sub">Built specifically for motion designers and video editors who live in After Effects.</p>
-
-    <!-- Flagship Features Layout -->
-    <div class="premium-splits">
-      <!-- Split 1: MoPack -->
-      <div class="feature-split fade-up">
-        <div class="split-text">
-          <span class="split-eyebrow">Cloud Review</span>
-          <h2 class="split-title">Feedback,<br/>Timestamped.</h2>
-          <p class="split-desc">Upload your timeline renders directly to MoPack with a single click. Share the generated web link, and your clients can view the video, drop precise timestamped notes, and draw shapes directly on the frame—all instantly synced back to your After Effects panel.</p>
-        </div>
-        <div class="split-visual">
-          <img src="/screenshots/Mopack.png" alt="MoPack Cloud Review" />
-        </div>
-      </div>
-
-      <!-- Split 2: MoPrompt -->
-      <div class="feature-split fade-up">
-        <div class="split-text">
-          <span class="split-eyebrow">AI Automation</span>
-          <h2 class="split-title">Code Without Coding.</h2>
-          <p class="split-desc">Don't know ExtendScript or expressions? Just type what you want to achieve in plain English. MoPrompt's advanced AI instantly writes and applies complex scripts directly to your layers, unlocking endless scripting possibilities without the learning curve.</p>
-        </div>
-        <div class="split-visual">
-          <img src="/screenshots/MoPrompt.png" alt="MoPrompt AI Builder" />
-        </div>
-      </div>
-
-      <!-- Split 3: MoHealth -->
-      <div class="feature-split fade-up">
-        <div class="split-text">
-          <span class="split-eyebrow">System Optimization</span>
-          <h2 class="split-title">Keep Your Project Breathing.</h2>
-          <p class="split-desc">Keep massive projects moving at lightspeed. MoHealth automatically scans your composition for hidden memory hogs, unfindable duplicate footage, and lets you purge your RAM and disk caches securely with one click.</p>
-        </div>
-        <div class="split-visual">
-          <img src="/screenshots/Mohealth.png" alt="MoHealth System Optimization" />
-        </div>
-      </div>
-
-      <!-- Split 4: E2EE Chat -->
-      <div class="feature-split fade-up">
-        <div class="split-text">
-          <span class="split-eyebrow">Strict Privacy</span>
-          <h2 class="split-title">True Zero-Knowledge Security.</h2>
-          <p class="split-desc">Every piece of feedback, every shared asset, and every keystroke inside MoaChat is protected by military-grade End-To-End Encryption. Only your team can decrypt your messages. Nobody else—not even us.</p>
-        </div>
-        <div class="split-visual">
-          <img src="/screenshots/End_to_end_encryption.png" alt="End-To-End Encrypted Team Chat" />
-        </div>
       </div>
     </div>
 
-    <!-- Secondary Utilities Grid -->
-    <div class="section-eyebrow" style="margin-top: 60px;">More Tools Included</div>
-    <h2 class="section-title" style="margin-bottom: 40px;">The Ultimate Utility Belt</h2>
-    <div class="features-grid">
-      <!-- Grid 1 -->
-      <div class="feature-img-card fade-up">
-        <div class="feature-img-wrapper">
-          <img src="/screenshots/Motouch.png" alt="MoTouch Pie Menu" />
-        </div>
-        <div class="feature-img-content">
-          <h3>MoTouch Pie Menus</h3>
-          <p>Supercharge your workflow. Trigger specialized scripts, alignments, and tools using ultra-fast radial menus.</p>
-        </div>
-      </div>
-
-      <!-- Grid 2 -->
-      <div class="feature-img-card fade-up">
-        <div class="feature-img-wrapper">
-          <img src="/screenshots/Pixabay.png" alt="Stock Assets" />
-        </div>
-        <div class="feature-img-content">
-          <h3>Integrated Free Assets</h3>
-          <p>Search thousands of Pixabay photos, Google Fonts, and SVG icons right within the panel and apply them instantly.</p>
-        </div>
-      </div>
-
-      <!-- Grid 3 -->
-      <div class="feature-img-card fade-up">
-        <div class="feature-img-wrapper">
-          <img src="/screenshots/TemGrid_Rule_of_Thirds.png" alt="TemGrid UI" />
-        </div>
-        <div class="feature-img-content">
-          <h3>TemGrid Layouts</h3>
-          <p>Toggle Golden Ratio, Isometric, Rule of Thirds, and precise grid overlays directly onto your viewer.</p>
-        </div>
-      </div>
-
-      <!-- Grid 4 -->
-      <div class="feature-img-card fade-up">
-        <div class="feature-img-wrapper">
-          <img src="/screenshots/Mozoom.png" alt="MoZoom Nav" />
-        </div>
-        <div class="feature-img-content">
-          <h3>MoZoom Navigation</h3>
-          <p>Never lose your place. Glide through dense timelines and navigate countless layers with precise keyframe focus.</p>
-        </div>
+  
+    <div class="premium-splits" style="margin-bottom: 120px;">
+      <div class="feature-center fade-up" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 40px; width: 100%;">
+          <div class="split-text" style="max-width: 800px; width: 100%;">
+              <span class="split-eyebrow">Highlight</span>
+              <h2 class="split-title">MoPack: Video Review Player</h2>
+              <p class="split-desc" style="max-width: 600px; margin: 0 auto;">The heart of MoChat's collaboration suite. A frame-accurate video player that allows you to draw annotations and leave timestamped comments. Teammates can reply to specific frames, and these comments can be synced back to your AE timeline as markers.</p>
+          </div>
+          <div class="split-visual center-visual" style="max-width: 1000px; width: 100%; background: #141620; padding: 20px; border-radius: 20px;">
+              <img src="screenshots/Mopack.png" alt="MoPack: Video Review Player" style="max-width: 100%; max-height: 600px; margin: 0 auto; display: block; object-fit: contain; border-radius: 12px;" />
+          </div>
       </div>
     </div>
-  </section>
-
-  <!-- ─── MOPACK ─── -->
-  <section id="mopack" class="mopack-section">
-    <div class="mopack-inner">
-      <div class="mopack-text fade-up">
-        <div class="section-eyebrow" style="text-align:left;margin-bottom:12px;">MoPack</div>
-        <h2>Share Your Renders.<br />Get Feedback Fast.</h2>
-        <p>
-          Upload a video to MoPack, click Share, and instantly get a link anyone can open in a browser —
-          no login required to view, login to comment. Reviewers can drop timestamped notes and draw directly
-          on the video.
-        </p>
-        <ul class="mopack-features">
-          <li>Cloud video storage (3 GB lifetime on Pro)</li>
-          <li>Timestamped comments + shape annotations</li>
-          <li>Shareable link — works on any device</li>
-          <li>Mark feedback as solved / rejected</li>
-          <li>Unlimited videos, unlimited reviewers</li>
-        </ul>
-      </div>
-      <div class="mopack-visual fade-up">
-        <div class="mopack-header">
-          <div class="mopack-dot"></div>
-          <span class="mopack-title">MoPack · Brand Animation v3</span>
-        </div>
-        <div class="mopack-thumb">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="rgba(29,161,255,0.5)">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-        </div>
-        <div style="font-size:11px;color:#374151;margin-bottom:10px;">Share this project with anyone:</div>
-        <div class="share-link-box">
-          <span class="share-link-text">https://moachats.shop/mopack?project_id=abc&video_id=xyz</span>
-          <button class="share-copy-btn">Copy</button>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-top:14px;">
-          <div style="width:6px;height:6px;border-radius:50%;background:#10B981"></div>
-          <span style="font-size:11px;color:#374151">3 people have already viewed this</span>
-        </div>
+  
+    <div class="premium-splits" style="margin-bottom: 120px;">
+      <div class="feature-center fade-up" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 40px; width: 100%;">
+          <div class="split-text" style="max-width: 800px; width: 100%;">
+              <span class="split-eyebrow">Highlight</span>
+              <h2 class="split-title">MoPrompt: AI Director</h2>
+              <p class="split-desc" style="max-width: 600px; margin: 0 auto;">The revolutionary AI prompt builder integrated with After Effects. It features a 3D scene preview where you can move cameras and subjects to visualize your shot before generating high-end AI images or animations (Midjourney/DALL-E) to use in your project.</p>
+          </div>
+          <div class="split-visual center-visual" style="max-width: 1000px; width: 100%; background: #141620; padding: 20px; border-radius: 20px;">
+              <img src="screenshots/MoPrompt.png" alt="MoPrompt: AI Director" style="max-width: 100%; max-height: 600px; margin: 0 auto; display: block; object-fit: contain; border-radius: 12px;" />
+          </div>
       </div>
     </div>
-  </section>
+        
+</section>
 
-  <!-- ─── PRICING CTA ─── -->
+<!-- ─── EVERYTHING YOUR TEAM NEEDS (Dark Section) ─── -->
+<section id="tools" class="features-section" style="background: linear-gradient(to bottom, #0E0F14, #060608); padding-top: 100px;">
+    <div class="section-eyebrow">More Tools Included</div>
+    <h2 class="section-title" style="margin-bottom: 80px;">Everything Your Team Needs</h2>
+    
+    
+    <div class="premium-splits" style="margin-bottom: 120px;">
+      <div class="feature-center fade-up" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 40px; width: 100%;">
+          <div class="split-text" style="max-width: 800px; width: 100%;">
+              <span class="split-eyebrow">Highlight</span>
+              <h2 class="split-title">MoFix: Project Repair</h2>
+              <p class="split-desc" style="max-width: 600px; margin: 0 auto;">A dedicated utility for repairing project-level issues. From relinking broken media paths to cleaning up messy project structures, MoFix automates the boring parts of project maintenance so you can focus on being creative.</p>
+          </div>
+          <div class="split-visual center-visual" style="max-width: 1000px; width: 100%; background: #141620; padding: 20px; border-radius: 20px;">
+              <img src="screenshots/Mofix.png" alt="MoFix: Project Repair" style="max-width: 100%; max-height: 600px; margin: 0 auto; display: block; object-fit: contain; border-radius: 12px;" />
+          </div>
+      </div>
+    </div>
+    
+    <div class="premium-splits" style="margin-bottom: 120px;">
+        
+    <div class="feature-split fade-up">
+        <div class="split-text">
+            <h2 class="split-title">Google Explore Palette</h2>
+            <p class="split-desc">Never run out of inspiration. This feature integrates a vast library of trending color palettes from the Google Material Design ecosystem. Browse, filter, and instantly apply professional color schemes to your After Effects compositions with a single click.</p>
+        </div>
+        <div class="split-visual side-visual">
+            <img src="screenshots/Google_Explore Palette.png" alt="Google Explore Palette" />
+        </div>
+    </div>   <!-- 1st: left text, right img -->
+        
+    <div class="feature-split fade-up">
+        <div class="split-text">
+            <h2 class="split-title">Global Find & Replace</h2>
+            <p class="split-desc">Modify text across your entire project in seconds. Search through all compositions for specific words or phrases and replace them globally. It supports case sensitivity and provides a preview before applying changes.</p>
+        </div>
+        <div class="split-visual side-visual">
+            <img src="screenshots/MoF&R.png" alt="Global Find & Replace" />
+        </div>
+    </div>                    <!-- 2nd: right text, left img (due to nth-child) -->
+        
+    <div class="feature-split fade-up">
+        <div class="split-text">
+            <h2 class="split-title">Google Fonts Integration</h2>
+            <p class="split-desc">Stop wasting time searching for fonts in a browser. MoChat brings the entire Google Fonts library directly into After Effects. Preview thousands of typefaces with custom text, download them instantly, and apply them to your text layers without ever leaving your workspace.</p>
+        </div>
+        <div class="split-visual side-visual">
+            <img src="screenshots/Google_Font.png" alt="Google Fonts Integration" />
+        </div>
+    </div>              <!-- 3rd: left text, right img -->
+        
+    <div class="feature-split fade-up">
+        <div class="split-text">
+            <h2 class="split-title">Google Icons Library</h2>
+            <p class="split-desc">Access thousands of high-quality vector icons from the Material Symbols library. Search by keyword and drag-and-drop icons directly into your project. Perfect for UI/UX animation, dashboard design, and infographics.</p>
+        </div>
+        <div class="split-visual side-visual">
+            <img src="screenshots/Google_Icons.png" alt="Google Icons Library" />
+        </div>
+    </div>             <!-- 4th: right text, left img -->
+    </div>
+
+    
+    <div class="premium-splits" style="margin-bottom: 120px;">
+      <div class="feature-split fade-up ">
+          <div class="split-text">
+              <span class="split-eyebrow">Features Collection</span>
+              <h2 class="split-title">Gradlette Color Suite</h2>
+              <p class="split-desc">Generate, explore, and apply perfectly harmonic color palettes to your AE projects.</p>
+          </div>
+          <div class="split-visual carousel-container">
+              <div class="carousel-track">
+                  
+        <div class="carousel-slide active">
+            <img src="screenshots/Google_Generate.png" alt="Smart Palette Generator" />
+            <div class="carousel-caption">
+                <h3>Smart Palette Generator</h3>
+                <p>Harness the power of the Google palette engine to generate harmonic color schemes on the fly. Whether you need a monochromatic look or a vibrant triadic scheme, this tool provides logical color transitions that elevate the professional quality of your designs.</p>
+            </div>
+        </div>
+    
+        <div class="carousel-slide ">
+            <img src="screenshots/Google_My Librarry.png" alt="Global Design Library" />
+            <div class="carousel-caption">
+                <h3>Global Design Library</h3>
+                <p>A centralized place to organize all your favorite design assets. Save specific fonts, color palettes, and icons into your "My Library" to reuse them across different projects, ensuring consistent branding for recurring clients.</p>
+            </div>
+        </div>
+    
+        <div class="carousel-slide ">
+            <img src="screenshots/Gradlette.png" alt="Gradlette Color Suite" />
+            <div class="carousel-caption">
+                <h3>Gradlette Color Suite</h3>
+                <p>The "Gradlette" main interface is your hub for color management. It features a spacebar-driven random generator that follows color theory rules, allowing you to discover unique color combinations in seconds.</p>
+            </div>
+        </div>
+    
+        <div class="carousel-slide ">
+            <img src="screenshots/Google_Image Extractor.png" alt="AI Image Color Extractor" />
+            <div class="carousel-caption">
+                <h3>AI Image Color Extractor</h3>
+                <p>Match your graphics to your source footage perfectly. Upload an image or capture a frame from your active composition, and MoChat's AI will extract a professional 5-color palette based on the dominant and accent tones in the image.</p>
+            </div>
+        </div>
+    
+        <div class="carousel-slide ">
+            <img src="screenshots/Gradlette_Contrast Checker.png" alt="WCAG Contrast Checker" />
+            <div class="carousel-caption">
+                <h3>WCAG Contrast Checker</h3>
+                <p>Professional design requires professional accessibility. This tool checks the contrast ratio between your background and foreground colors to ensure your text is readable for all users and meets international WCAG 2.1 accessibility standards.</p>
+            </div>
+        </div>
+    
+        <div class="carousel-slide ">
+            <img src="screenshots/Gradlette_Color_whele.png" alt="Harmonic Color Wheel" />
+            <div class="carousel-caption">
+                <h3>Harmonic Color Wheel</h3>
+                <p>A visual playground for color theory. Explore Analogous, Triadic, Complementary, and Tetradic relationships with a precision wheel. Adjust saturation and lightness in real-time to refine your project's mood.</p>
+            </div>
+        </div>
+    
+              </div>
+              <button class="carousel-btn carousel-prev">&larr;</button>
+              <button class="carousel-btn carousel-next">&rarr;</button>
+              <div class="carousel-nav">
+                  <div class="carousel-dot active" data-index="0"></div><div class="carousel-dot " data-index="1"></div><div class="carousel-dot " data-index="2"></div><div class="carousel-dot " data-index="3"></div><div class="carousel-dot " data-index="4"></div><div class="carousel-dot " data-index="5"></div>
+              </div>
+          </div>
+      </div>
+    </div>
+
+    
+    <div class="premium-splits" style="margin-bottom: 120px;">
+      <div class="feature-split fade-up force-reverse">
+          <div class="split-text">
+              <span class="split-eyebrow">Features Collection</span>
+              <h2 class="split-title">TemGrid Composition Guides</h2>
+              <p class="split-desc">Professional layout grids overlaying your viewer ensure your designs have perfect rhythm and balance.</p>
+          </div>
+          <div class="split-visual carousel-container">
+              <div class="carousel-track">
+                  
+        <div class="carousel-slide active">
+            <img src="screenshots/TemGrid_Rule_of_Thirds.png" alt="TemGrid: Rule of Thirds" />
+            <div class="carousel-caption">
+                <h3>TemGrid: Rule of Thirds</h3>
+                <p>The standard for photographic and cinematic composition. This 3x3 grid helps you place points of interest on the intersections for a more dynamic and balanced frame than simple centering.</p>
+            </div>
+        </div>
+    
+        <div class="carousel-slide ">
+            <img src="screenshots/TemGrid_Column_Grid.png" alt="TemGrid: Column Grid" />
+            <div class="carousel-caption">
+                <h3>TemGrid: Column Grid</h3>
+                <p>Standard 12-column (or custom) layout guides. Use these to structure complex informational layouts, dashboards, and web-stye designs with consistent margins and gutters.</p>
+            </div>
+        </div>
+    
+        <div class="carousel-slide ">
+            <img src="screenshots/TemGrid_Modular_Grid.png" alt="TemGrid: Modular Grid" />
+            <div class="carousel-caption">
+                <h3>TemGrid: Modular Grid</h3>
+                <p>Beyond simple columns, the modular grid creates a matrix of "zones." This is perfect for complex screen designs where you need to balance text, data, and imagery in a tight, organized space.</p>
+            </div>
+        </div>
+    
+        <div class="carousel-slide ">
+            <img src="screenshots/TemGrid_Baseline_Grid.png" alt="TemGrid: Baseline Grid" />
+            <div class="carousel-caption">
+                <h3>TemGrid: Baseline Grid</h3>
+                <p>Achieve perfect vertical rhythm in your typography. This grid guide provides consistent horizontal lines to ensure all your text layers are aligned perfectly, essential for professional UI and editorial animations.</p>
+            </div>
+        </div>
+    
+        <div class="carousel-slide ">
+            <img src="screenshots/TemGrid_Golden_Ratio.png" alt="TemGrid: Golden Ratio" />
+            <div class="carousel-caption">
+                <h3>TemGrid: Golden Ratio</h3>
+                <p>Apply the "Phi" ratio (1.618) to your compositions. This guide helps you place elements in a way that is naturally pleasing to the human eye, used by master painters and filmmakers for centuries.</p>
+            </div>
+        </div>
+    
+        <div class="carousel-slide ">
+            <img src="screenshots/TemGrid_Center_Cross.png" alt="TemGrid: Center Cross" />
+            <div class="carousel-caption">
+                <h3>TemGrid: Center Cross</h3>
+                <p>The simplest yet most essential guide. It overlays a precise crosshair at the mathematical center of your composition, making it easy to center subjects or align logos perfectly.</p>
+            </div>
+        </div>
+    
+        <div class="carousel-slide ">
+            <img src="screenshots/TemGrid_Pixel_Grid.png" alt="TemGrid: Pixel Grid" />
+            <div class="carousel-caption">
+                <h3>TemGrid: Pixel Grid</h3>
+                <p>When every pixel counts. This fine mesh guide helps you align your shape paths and text to the pixel grid, preventing "blurry" edges and ensuring your graphics look crisp on all screens.</p>
+            </div>
+        </div>
+    
+        <div class="carousel-slide ">
+            <img src="screenshots/TemGrid_Isometric.png" alt="TemGrid: Isometric Grid" />
+            <div class="carousel-caption">
+                <h3>TemGrid: Isometric Grid</h3>
+                <p>Creating 2.5D graphics has never been easier. This tool generates 30° degree diagonal guides, allowing you to build perfect isometric shapes and layouts without needing complex 3D software.</p>
+            </div>
+        </div>
+    
+        <div class="carousel-slide ">
+            <img src="screenshots/TemGrid_Safe_Areas.png" alt="TemGrid: Safe Areas" />
+            <div class="carousel-caption">
+                <h3>TemGrid: Safe Areas</h3>
+                <p>Ensure your content works on every screen. Toggle between Action Safe and Title Safe guides to make sure your important information isn't cut off by different TV aspect ratios or social media UI overlays.</p>
+            </div>
+        </div>
+    
+              </div>
+              <button class="carousel-btn carousel-prev">&larr;</button>
+              <button class="carousel-btn carousel-next">&rarr;</button>
+              <div class="carousel-nav">
+                  <div class="carousel-dot active" data-index="0"></div><div class="carousel-dot " data-index="1"></div><div class="carousel-dot " data-index="2"></div><div class="carousel-dot " data-index="3"></div><div class="carousel-dot " data-index="4"></div><div class="carousel-dot " data-index="5"></div><div class="carousel-dot " data-index="6"></div><div class="carousel-dot " data-index="7"></div><div class="carousel-dot " data-index="8"></div>
+              </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="premium-splits" style="margin-bottom: 120px;">
+        
+    <div class="feature-split fade-up">
+        <div class="split-text">
+            <h2 class="split-title">MoZoom: Precision Navigation</h2>
+            <p class="split-desc">standard zoom presets can be limiting. MoZoom provides a smooth slider that allows you to zoom your AE viewer from 1% to 800% with precision, making it easier to work on fine details or view the entire canvas.</p>
+        </div>
+        <div class="split-visual side-visual">
+            <img src="screenshots/Mozoom.png" alt="MoZoom: Precision Navigation" />
+        </div>
+    </div>                   <!-- left text -->
+        
+    <div class="feature-split fade-up">
+        <div class="split-text">
+            <h2 class="split-title">Moji: Contextual Emoji Search</h2>
+            <p class="split-desc">Modern communication and design often require emojis. Moji provides a fast, searchable interface for thousands of emojis, allowing you to insert them into your chat messages or directly into After Effects text layers.</p>
+        </div>
+        <div class="split-visual side-visual">
+            <img src="screenshots/Moji.png" alt="Moji: Contextual Emoji Search" />
+        </div>
+    </div>                     <!-- right text -->
+        
+    <div class="feature-split fade-up">
+        <div class="split-text">
+            <h2 class="split-title">MoHealth: Performance Analytics</h2>
+            <p class="split-desc">Is your project lagging? MoHealth identifies "Performance Killers" like heavy effects, unoptimized assets, and massive disk caches. It gives your project a health score and provides one-click optimizations to speed up your render times.</p>
+        </div>
+        <div class="split-visual side-visual">
+            <img src="screenshots/Mohealth.png" alt="MoHealth: Performance Analytics" />
+        </div>
+    </div>                 <!-- left text -->
+        
+    <div class="feature-split fade-up">
+        <div class="split-text">
+            <h2 class="split-title">MoTouch Macro Deck</h2>
+            <p class="split-desc">Transform any touch device into a professional shortcut hub. Create custom layouts of your most-used After Effects commands and trigger them with a single tap, significantly reducing your reliance on complex keyboard shortcuts.</p>
+        </div>
+        <div class="split-visual side-visual">
+            <img src="screenshots/Motouch.png" alt="MoTouch Macro Deck" />
+        </div>
+    </div>                  <!-- right text -->
+    </div>
+</section>
+<!-- ─── PRICING CTA ─── -->
   <section class="pricing-cta">
     <div class="pricing-cta-inner fade-up">
       <div style="font-size:40px;margin-bottom:20px;">✨</div>
@@ -1122,5 +1445,29 @@
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
   </script>
 
-</body>
-</html>
+
+  <script>
+    // Carousel Logic
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.carousel-container').forEach(container => {
+            const track = container.querySelector('.carousel-track');
+            const slides = container.querySelectorAll('.carousel-slide');
+            const dots = container.querySelectorAll('.carousel-dot');
+            const prev = container.querySelector('.carousel-prev');
+            const next = container.querySelector('.carousel-next');
+            let currentIndex = 0;
+
+            function goToSlide(index) {
+                if(index < 0) index = slides.length - 1;
+                if(index >= slides.length) index = 0;
+                currentIndex = index;
+                track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+                dots.forEach((d, i) => d.classList.toggle('active', i === currentIndex));
+            }
+
+            if(prev) prev.addEventListener('click', () => goToSlide(currentIndex - 1));
+            if(next) next.addEventListener('click', () => goToSlide(currentIndex + 1));
+            dots.forEach((dot, i) => dot.addEventListener('click', () => goToSlide(i)));
+        });
+    });
+  </script>
