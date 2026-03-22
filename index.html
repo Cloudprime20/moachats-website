@@ -620,20 +620,53 @@
   </footer>
 
   <script>
-    // System UI & Animation Logic
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+
+
+  <script>
+    // Carousel Logic
     document.addEventListener('DOMContentLoaded', () => {
-        // Scroll fade-up animations
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('visible');
+        document.querySelectorAll('.carousel-container').forEach(container => {
+            const track = container.querySelector('.carousel-track');
+            const slides = container.querySelectorAll('.carousel-slide');
+            const dots = container.querySelectorAll('.carousel-dot');
+            const prev = container.querySelector('.carousel-prev');
+            const next = container.querySelector('.carousel-next');
+            let currentIndex = 0;
+
+            function goToSlide(index) {
+                if(index < 0) index = slides.length - 1;
+                if(index >= slides.length) index = 0;
+                currentIndex = index;
+                track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+                dots.forEach((d, i) => d.classList.toggle('active', i === currentIndex));
             }
-          });
-        }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
 
-        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+            if(prev) prev.addEventListener('click', () => goToSlide(currentIndex - 1));
+            if(next) next.addEventListener('click', () => goToSlide(currentIndex + 1));
+            dots.forEach((dot, i) => dot.addEventListener('click', () => goToSlide(i)));
+        });
+    });
+  </script>
 
-        // Carousel Logic (Unified)
+
+
+
+
+<!-- CAROUSEL SCRIPT -->
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.carousel-container').forEach(container => {
             const visualContainer = container.closest('.split-visual');
             const slides = container.querySelectorAll('.carousel-slide');
